@@ -9,7 +9,7 @@ use App\Http\Controllers\PagesController;
  * Welcome page route
  */
 
-Route::get('/', [PagesController::class, 'home'])->name('home');
+Route::get('/', [PagesController::class, 'index'])->name('welcome');
 
 /**
  * Authentication routes
