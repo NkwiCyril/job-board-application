@@ -21,8 +21,9 @@ Route::get('/register', [AuthController::class, 'register'])->name('auth.registe
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 /**
- * Pages routes in 
+ * Routes to opportunities display and other functionality
  */
+
 
 
 Route::fallback(function() {
