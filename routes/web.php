@@ -21,5 +21,10 @@ Route::get('/register', [AuthController::class, 'register'])->name('auth.registe
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 /**
- * 
+ * Pages routes in 
  */
+
+
+Route::fallback(function() {
+    return "<h1>Sorry, this page has not been found.</h1>";
+});

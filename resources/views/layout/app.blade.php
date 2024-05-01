@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full bg-white">
 
 <head>
   <meta charset="UTF-8">
@@ -11,8 +11,6 @@
   <title>Seeka - Job Board</title>
 </head>
 
-<body>
   @yield('content')
-</body>
 
 </html>
