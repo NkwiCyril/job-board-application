@@ -16,9 +16,9 @@ Route::get('/', [PagesController::class, 'index'])->name('welcome');
  * register, login, logout for all users
  * @author: Nkwi Cyril <akinimbomnkwi@gmail.com>
  */
-Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
-Route::get('/register', [AuthController::class, 'register'])->name('auth.register');
-Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::get('login', [AuthController::class, 'login'])->name('auth.login');
+Route::get('register', [AuthController::class, 'register'])->name('auth.register');
+Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 /**
  * Routes to opportunities display and other functionality
@@ -27,5 +27,5 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 
 Route::fallback(function() {
-    return "<h1>Sorry, this page has not been found.</h1>";
+    return view('error.error_page');
 });
