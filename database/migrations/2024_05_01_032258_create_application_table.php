@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('application', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('user_id')->unsigned();
             $table->unsignedBigInteger('opp_id')->unsigned();
             $table->dateTime('application_date');
