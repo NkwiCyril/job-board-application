@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as AuthenticatableUser;
 
-class User extends Model
+
+class User extends AuthenticatableUser
 {
     use HasFactory;
 
@@ -17,6 +18,8 @@ class User extends Model
         'name',
         'email',
         'password',
+        'phone_number',
+        'category'
     ];
     protected $hidden = [
         'password'
