@@ -24,15 +24,18 @@
       </div>
     </nav>
   </header>
-  <div class="intro prose lg:prose-xl mx-auto mt-20 p-10">
+  <div class="intro text-center prose lg:prose-xl mx-auto mt-20 p-10">
     <h1>Welcome to Seeka</h1>
     <p>At Seeka, we're here to revolutionize how you find your next opportunity.
       Whether you're searching for your dream job, looking to hire top talent as a company,
       exploring internship opportunities, or voluneerism, Seeka has everything you need to succeed.
     </p>
-    <div class="flex gap-5 ">
-      <a class="transition ease-in-out delay-300 hover:text-[#4ba198] no-underline" href="{{ route('auth.register') }}">Get Started</a>
+    <div class="flex justify-center gap-5 ">
+      <button type="submit" class="flex w-2\4 justify-center rounded-md bg-[#4ba198] px-3 py-1.5 text-lg font-semibold leading-6 shadow-sm hover:bg-[#47867f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#386964]">
+        <a class="text-white no-underline" href="{{ route('auth.register') }}">Get Started</a>
+      </button>
     </div>
+
   </div>
 </body>
 
