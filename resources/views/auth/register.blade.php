@@ -6,14 +6,14 @@
   <div class="flex min-h-full flex-col justify-center px-6 py-3 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-lg">
 
-      <a href="{{route('pages.landing')}}">
+      <a href="{{route('pages.home')}}">
         <img class="mx-auto h-12 w-auto" src="/seeka_logo.png" alt="seeka">
       </a>
 
       <h2 class="mt-5 text-center text-2xl font-bold leading-5 tracking-tight text-gray-900">Let's get you ready!</h2>
     </div>
     <div class="mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-3" action="{{route('auth.register_user')}}" method="POST">
+      <form class="space-y-3" action="{{route('auth.register')}}" method="POST">
         @csrf
         @include('partials.usertype')
         <div>
