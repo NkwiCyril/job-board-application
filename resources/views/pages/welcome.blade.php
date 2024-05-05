@@ -4,7 +4,7 @@
 
 <body class="bg-white">
   <header class="absolute inset-x-0 top-0 z-50">
-    <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+    <nav class="flex items-center justify-between px-6 py-3 lg:px-8" aria-label="Global">
       <div class="flex lg:flex-1">
         <a href="{{route('welcome')}}" class="-m-1.5 p-1.5">
           <span class="sr-only">Seeka</span>
@@ -19,8 +19,9 @@
           </svg>
         </button>
       </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="{{route('auth.login')}} " class="text-xl font-semibold leading-6 text-gray-900 transition ease-in-out delay-300 hover:text-[#4ba198]">Log in <span aria-hidden="true">&rarr;</span></a>
+      <div class="hidden gap-5 lg:flex lg:flex-1 lg:justify-end">
+        <a href="{{route('auth.login')}}" class="text-xl font-semibold leading-6 text-gray-900 transition ease-in-out hover:text-[#4ba198]">Sign In</a>
+        <a href="{{route('auth.register')}}" class="text-xl font-semibold leading-6 text-gray-900 transition ease-in-out hover:text-[#4ba198]">Sign Up</a>
       </div>
     </nav>
   </header>
