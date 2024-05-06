@@ -16,8 +16,8 @@
         </button>
       </div>
       <div class="hidden gap-5 lg:flex lg:flex-1 lg:justify-end">
-        <a href="{{route('auth.login')}}" class="text-xl font-semibold leading-6 text-gray-900 transition ease-in-out hover:text-[#4ba198]">Sign In</a>
-        <a href="{{route('auth.register')}}" class="text-xl font-semibold leading-6 text-gray-900 transition ease-in-out hover:text-[#4ba198]">Sign Up</a>
+        <a href="{{route('auth.login')}}" class="text-xl font-semibold leading-6 text-gray-900 transition ease-in-out hover:text-customColor">Sign In</a>
+        <a href="{{route('auth.register')}}" class="text-xl font-semibold leading-6 text-gray-900 transition ease-in-out hover:text-customColor">Sign Up</a>
       </div>
     </nav>
   </header>

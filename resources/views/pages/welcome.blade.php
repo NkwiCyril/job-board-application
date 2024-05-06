@@ -20,8 +20,8 @@
         </button>
       </div>
       <div class="hidden gap-5 lg:flex lg:flex-1 lg:justify-end">
-        <a href="{{route('auth.login')}}" class="text-xl font-semibold leading-6 text-gray-900 transition ease-in-out hover:text-[#4ba198]">Sign In</a>
-        <a href="{{route('auth.register')}}" class="text-xl font-semibold leading-6 text-gray-900 transition ease-in-out hover:text-[#4ba198]">Sign Up</a>
+        <a href="{{route('auth.login')}}" class="text-xl font-semibold leading-6 text-gray-900 transition ease-in-out hover:text-customColor">Sign In</a>
+        <a href="{{route('auth.register')}}" class="text-xl font-semibold leading-6 text-gray-900 transition ease-in-out hover:text-customColor">Sign Up</a>
       </div>
     </nav>
   </header>
@@ -32,7 +32,7 @@
       exploring internship opportunities, or voluneerism, Seeka has everything you need to succeed.
     </p>
     <div class="flex justify-center gap-5 ">
-      <button type="submit" class="flex w-2\4 justify-center rounded-md bg-[#4ba198] px-3 py-1.5 text-lg font-semibold leading-6 shadow-sm hover:bg-[#47867f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#386964]">
+      <button type="submit" class="flex w-2\4 justify-center rounded-md bg-customColor px-3 py-1.5 text-lg font-semibold leading-6 shadow-sm hover:bg-customColorDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#386964]">
         <a class="text-white no-underline" href="{{ route('auth.register') }}">Get Started</a>
       </button>
     </div>

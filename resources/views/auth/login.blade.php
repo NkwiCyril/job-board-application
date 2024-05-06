@@ -40,13 +40,13 @@
         </div>
 
         <div>
-          <button type="submit" class="flex w-full justify-center rounded-md bg-[#4ba198] px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-[#386964] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#386964]">Sign In</button>
+          <button type="submit" class="flex w-full justify-center rounded-md bg-customColor px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-[#386964] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#386964]">Sign In</button>
         </div>
       </form>
 
       <p class="mt-10 text-center text-sm text-gray-500">
         Don't have an account?
-        <a href="{{route('auth.register')}}" class="font-semibold leading-6 text-[#4ba198] hover:text-[#2a645e]">Sign Up</a>
+        <a href="{{route('auth.register')}}" class="font-semibold leading-6 text-customColor hover:text-customColorDark">Sign Up</a>
       </p>
     </div>
   </div>

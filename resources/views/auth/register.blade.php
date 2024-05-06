@@ -46,13 +46,13 @@
           @include('partials.category')
         </div>
         <div>
-          <button type="submit" class="flex w-full justify-center rounded-md bg-[#4ba198] px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-[#386964] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#386964]">Sign Up</button>
+          <button type="submit" class="flex w-full justify-center rounded-md bg-customColor px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-[#386964] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#386964]">Sign Up</button>
         </div>
       </form>
 
       <p class="mt-5 text-center text-sm text-gray-500">
         Already have an account?
-        <a href="{{route('auth.login')}}" class="font-semibold leading-6 text-[#2a645e] hover:text-[#4ba198]">Sign In</a>
+        <a href="{{route('auth.login')}}" class="font-semibold leading-6 text-customColorDark hover:text-customColor">Sign In</a>
       </p>
 
     </div>

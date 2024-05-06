@@ -1,7 +1,12 @@
 <div>
-  <div class=" flex justify-between items-center">
-    <h2 class="text-gray-900 text-2xl font-bold">Opportunity Listings</h2>
-    <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-2/5 p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-900 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search by job title, category or company">
+  <div class="flex justify-between items-center">
+    <div class="flex items-center justify-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+        <path d="M5.625 3.75a2.625 2.625 0 1 0 0 5.25h12.75a2.625 2.625 0 0 0 0-5.25H5.625ZM3.75 11.25a.75.75 0 0 0 0 1.5h16.5a.75.75 0 0 0 0-1.5H3.75ZM3 15.75a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75ZM3.75 18.75a.75.75 0 0 0 0 1.5h16.5a.75.75 0 0 0 0-1.5H3.75Z" />
+      </svg>
+      <h2 class="text-2xl font-bold">Opportunity Listings</h2>
+    </div>
+    <input type="text" name="search" id="search_field" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customColor focus:border-primary-600 block w-2/5 p-2.5 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-600 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search by job title, category or company">
   </div>
 
   <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
@@ -9,17 +14,14 @@
     @foreach ($opportunities as $opportunity)
     <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
       <div class="flex items-end justify-end h-56 w-full bg-cover bg-[url({{$opportunity['image_url']}})]">
-        <!-- <button class="p-2 rounded-full bg-[#4ba198] text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-          <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-          </svg>
-        </button> -->
+        <img src="{{$opportunity['image_url']}}" class=" object-cover w-100" alt="opportunity_image">
       </div>
       <div class="p-3">
-        <h3 class="text-gray-700 uppercase">{{$opportunity['title']}}</h3>
-        <span class="text-gray-500 mt-2">{{$opportunity['description']}}</span>
-        <p>{{$opportunity['image_url']}}</p>
+        <a href="" class=" text-decoration-none no-underline">
+          <h3 class="text-gray-700 uppercase hover:text-customColor font-medium">{{$opportunity['title']}}</h3>
+        </a>
+        <span class="text-gray-500 mt-2 text-sm">{{$opportunity['description']}}</span>
       </div>
     </div>
     @endforeach
-</div>
+  </div>

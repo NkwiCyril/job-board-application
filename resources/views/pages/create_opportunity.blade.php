@@ -19,12 +19,12 @@
         </button>
       </div> -->
     <div class="{{--hidden--}} items-center justify-center gap-5 lg:flex lg:flex-1 lg:justify-end sm:flex">
-      <a href="{{route('pages.create_opportunity')}}" title="Post an opportunity" class=" text-decoration-none text-xl font-semibold leading-6 transition ease-in-out text-[#4ba198] hover:text-[#377b74]">
+      <a href="{{route('pages.create_opportunity')}}" title="Post an opportunity" class=" text-decoration-none text-xl font-semibold leading-6 transition ease-in-out text-customColor hover:text-[#377b74]">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-10">
           <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
         </svg>
       </a>
-      <a href="{{route('pages.create_opportunity')}}" title="Unpublished" class=" text-decoration-none text-xl font-semibold leading-6 transition ease-in-out text-[#4ba198] hover:text-[#377b74]">
+      <a href="{{route('pages.create_opportunity')}}" title="Unpublished" class=" text-decoration-none text-xl font-semibold leading-6 transition ease-in-out text-customColor hover:text-[#377b74]">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-10">
           <path d="M9.97.97a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1-1.06 1.06l-1.72-1.72v3.44h-1.5V3.31L8.03 5.03a.75.75 0 0 1-1.06-1.06l3-3ZM9.75 6.75v6a.75.75 0 0 0 1.5 0v-6h3a3 3 0 0 1 3 3v7.5a3 3 0 0 1-3 3h-7.5a3 3 0 0 1-3-3v-7.5a3 3 0 0 1 3-3h3Z" />
           <path d="M7.151 21.75a2.999 2.999 0 0 0 2.599 1.5h7.5a3 3 0 0 0 3-3v-7.5c0-1.11-.603-2.08-1.5-2.599v7.099a4.5 4.5 0 0 1-4.5 4.5H7.151Z" />
@@ -56,7 +56,7 @@
               </div>
               <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 150px; max-height: 150px;"></div>
               <div class="mt-2">
-                <span class="btn btn-outline-secondary btn-file hover:bg-[#4ba198]">
+                <span class="btn btn-outline-secondary btn-file hover:bg-customColor">
                   <span class="fileinput-new">Select Image</span>
                   <span class="fileinput-exists">Change</span>
                   <input type="file" name="image_url" accept="image/*" required>
@@ -83,7 +83,7 @@
           <textarea required id="description" name="description" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300  focus:border-primary-500dark:placeholder-gray-400 dark: dark:focus:border-primary-500" placeholder="Opportunity description here"></textarea>
         </div>
       </div>
-      <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 font-medium text-center text-white bg-[#4ba198] border-gray-400 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-[#388179]">
+      <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 font-medium text-center text-white bg-customColor border-gray-400 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-customColorDark">
         Create
       </button>
     </form>

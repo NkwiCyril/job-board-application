@@ -1,6 +1,6 @@
 <body class="bg-white">
   <header class="absolute inset-x-0 top-0 z-50">
-    <nav class="flex items-center justify-between px-6 py-3 lg:px-8" aria-label="Global">
+    <nav class="flex items-center justify-between px-10 py-3 lg:px-10" aria-label="Global">
       <div class="flex lg:flex-1">
         <a href="{{route('pages.home')}}" class="-m-1.5 p-1.5">
           <span class="sr-only">Seeka</span>
