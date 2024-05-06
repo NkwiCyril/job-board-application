@@ -39,7 +39,7 @@
   <div class="py-8 px-4 mx-auto max-w-3xl lg:py-24 sm:py-24">
     <h2 class="mb-4 text-2xl font-bold text-gray-900">Create a New Opportunity</h2>
 
-    <form action="{{route('pages.create_opportunity')}}" method="POST">
+    <form action="{{route('pages.create_opportunity')}}" method="POST" enctype="multipart/form-data">
     @csrf
 
       <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">

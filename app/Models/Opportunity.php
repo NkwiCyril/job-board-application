@@ -12,6 +12,14 @@ class Opportunity extends Model
     protected $table = 'opportunity';
     protected $primaryKey = 'id';
 
+    protected $fillable = [
+        'title',
+        'description',
+        'image_url',
+        'category_id',
+        'user_id'
+    ];
+
     public function category() {
         return $this->belongsTo(Category::class, 'id');
     }

@@ -21,7 +21,7 @@
       </div>
     </nav>
   </header>
-  <div class="intro text-center prose lg:prose-xl mx-auto mt-20 p-10">
-    <h1>all opps will display here for {{Auth::user()->name}}</h1>
+  <div class="intro mx-auto mt-20 p-10">
+    @include('partials.opp_section')
   </div>
 </body>

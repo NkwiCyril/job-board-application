@@ -13,10 +13,10 @@
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 
       @if ($errors->has('email'))
-      <span class="invalid-feedback text-red-700">
-        <strong>
+      <span class="invalid-feedback text-red-700 ">
+        <em>
           {{ $errors->first('email') }}
-        </strong>
+        </em>
       </span>
       @endif
 
