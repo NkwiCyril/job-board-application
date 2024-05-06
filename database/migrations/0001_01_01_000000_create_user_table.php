@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password')->nullable();
-            $table->bigInteger('phone_number');
+            $table->string('phone_number');
+            $table->enum('category',['job','internship','volunteerism'])->nullable();
             $table->boolean('logged_in')->default(false);
             $table->timestamps();
         });
