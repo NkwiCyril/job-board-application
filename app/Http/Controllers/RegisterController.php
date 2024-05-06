@@ -26,11 +26,7 @@ class RegisterController extends Controller
             'updated_at' => now(),
         ]);
         
-        if ($user['usertype'] === 'seeker') {
-            return redirect()->route('pages.seeker')->with('success','Registered Successfully!');
-        } else {
-            return redirect()->route('pages.company')->with('success','Registered Successfully!');
-        }
+        return redirect()->route('auth.login')->with('success','Registered Successfully!');
         
     }
 }

@@ -17,7 +17,6 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    
     // authenticate users
     public function authenticate(Request $request) {        
         $credentials = $request->validate([
@@ -31,11 +30,14 @@ class LoginController extends Controller
             $user->save();
             
             $request->session()->regenerate();
-            $redirectPath = $user->usertype === 'seeker' ? 'seeker/home' : 'company/home';
+            $new = session()->get('user');
+            // $redirectPath = $user->usertype === 'seeker' ? 'seeker/home' : 'company/home';
 
-            return redirect()->intended($redirectPath)->with([
-                'user' => $user
+            return redirect()->intended('/')->with([
+                'user' => $new,
             ]);
+
+            
         }
  
         return back()->withErrors([
