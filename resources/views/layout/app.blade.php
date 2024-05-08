@@ -15,7 +15,7 @@
   <link href="{{asset("assets/css/custom.css")}}" rel="stylesheet">
   
   @vite('resources/css/app.css')
-  <title>Seeka - Job Board</title>
+  <title>@yield('title', 'Seeka - Job Board')</title>
 </head>
 
 @yield('content')
@@ -28,7 +28,7 @@
 
 <footer class="bg-white white:bg-gray-900 m-4">
   <div class="w-full max-w-screen-lg mx-auto p-4 md:py-8">
-    <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="{{route('welcome')}}" class="hover:underline">Seeka™</a>. All Rights Reserved.</span>
+    <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="{{route('pages.home')}}" class="hover:underline">Seeka™</a>. All Rights Reserved.</span>
   </div>
 </footer>
 
