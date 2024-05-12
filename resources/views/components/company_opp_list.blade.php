@@ -1,12 +1,12 @@
 <!-- loop through all opportunities and display accordingly -->
 <div>
 
-  @if ($opps->count() == 0)
-  <h1 class=" font-bold">No Published Opportunities at the moment!</h1>
+  @if ($opps->where('user_id', Auth::user()->id)->count() === 0)
+  <h1 class=" font-bold">No created opportunities at the moment!</h1>
 
   @else
-  @foreach ($opps as $oop)
 
+  @foreach ($opps->where('user_id', Auth::user()->id) as $oop)
   <div class="max-w-xl mx-auto bg-white mb-2 rounded-xl shadow-md overflow-hidden md:max-w-2xl">
     <div class="md:flex h-fit gap-2">
       <div class="md:shrink-0 flex items-start justify-center p-2">
@@ -69,7 +69,11 @@
           @if ($unpublish)
             <p class="text-[12px] text-gray-500 font-medium pb-2">Created {{$oop->created_at->diffForHumans()}}</p>  
           @else
-            <p class="text-[12px] text-gray-500 font-medium pb-2">Published on {{$oop->published_at}}</p>  
+            <p class="text-[12px] text-gray-500 font-medium pb-2">Published {{
+
+              Carbon\Carbon::parse($oop->published_at)->diffForHumans()
+
+            }}</p>  
           @endif
 
 

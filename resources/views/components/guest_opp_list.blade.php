@@ -54,8 +54,7 @@
           </a>
         </button>
 
-        <p class="text-[12px] text-gray-500 font-medium pb-2">Publish Date: {{$oop->published_at}}</p>
-
+        <p class="text-[12px] text-gray-500 font-medium pb-2">Published {{Carbon\Carbon::parse($oop->published_at)->diffForHumans()}} by <span class="font-bold">{{$oop->user->name}}</span></p>
       </div>
     </div>
   </div>
