@@ -20,6 +20,14 @@
         </button>
       </div> -->
     <div class="{{--hidden--}} items-center justify-center gap-5 lg:flex lg:flex-1 lg:justify-end sm:flex">
+
+      <a href="{{route('pages.home')}}" title="Home" id="nav-item" class="active:text-customColor flex items-center gap-1 text-decoration-none text-xl font-semibold leading-6 transition ease-in-out text-gray-900 hover:text-customColor">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+          <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+          <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+        </svg>
+        Home
+      </a>
       <a href="" title="Unpublished" class=" flex items-center gap-1 text-decoration-none text-xl font-semibold leading-6 transition ease-in-out text-gray-900 hover:text-customColor">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
           <path d="M9.97.97a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1-1.06 1.06l-1.72-1.72v3.44h-1.5V3.31L8.03 5.03a.75.75 0 0 1-1.06-1.06l3-3ZM9.75 6.75v6a.75.75 0 0 0 1.5 0v-6h3a3 3 0 0 1 3 3v7.5a3 3 0 0 1-3 3h-7.5a3 3 0 0 1-3-3v-7.5a3 3 0 0 1 3-3h3Z" />
@@ -33,7 +41,7 @@
 </header>
 
 <section class="bg-white">
-  <div class="py-8 px-4 mx-auto max-w-3xl lg:py-24 sm:py-24">
+  <div class="py-8 px-4 mx-auto max-w-xl lg:py-24 sm:py-24">
     <h2 class="mb-4 text-2xl font-bold text-gray-900">Create a New Opportunity</h2>
 
     <form action="{{route('pages.create_opportunity')}}" method="POST" enctype="multipart/form-data">
