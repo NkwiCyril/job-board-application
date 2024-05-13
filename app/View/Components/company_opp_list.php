@@ -6,17 +6,14 @@ use Closure;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 
-class opp_list extends Component
+class company_opp_list extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(
-        public bool $company,
-        public bool $seeker,
-    )
+    public function __construct()
     {
-        
+        //
     }
 
     /**
@@ -24,6 +21,6 @@ class opp_list extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.opp_list');
+        return view('components.company_opp_list');
     }
 }
