@@ -18,12 +18,12 @@
           @if ($oop['category_id'] === 1)
           <span class="inline-flex items-center rounded-md bg-green-50 mt-2 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Job</span>
           @elseif ($oop['category_id'] === 2)
-          <span class="inline-flex items-center rounded-md bg-blue-50 mt-2 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">Intern</span>
+          <span class="inline-flex items-center rounded-md bg-blue-50 mt-2 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">Internship</span>
           @elseif ($oop['category_id'] === 3)
-          <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 mt-2  py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Volunteerism</span>
+          <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 mt-2  py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Volunteer</span>
           @endif
         </div>
-        <a href="{{route('pages.opportunity', $oop['title'])}}" class="block mt-1 text-lg leading-tight font-medium text-black hover:no-underline hover:text-customColor">{{$oop['title']}}</a>
+        <a href="{{route('pages.opportunity', $oop['title'])}}" class="block mt-1 text-lg leading-tight font-medium text-black hover:no-underline hover:text-customColor">{{$oop->title}}</a>
         <p class="mt-2 text-slate-500">
 
           <!-- php script to trim the description if very long to conserve space -->
@@ -54,7 +54,11 @@
           </a>
         </button>
 
-        <p class="text-[12px] text-gray-500 font-medium pb-2">Publish Date: {{$oop->published_at}}</p>
+        <p class="text-[13px] text-gray-500 font-medium pb-2">
+          Published {{Carbon\Carbon::parse($oop->published_at)->diffForHumans()}} by 
+          <span class="font-bold">{{$oop->user->name}}</span> 
+        </p>
+        
 
       </div>
     </div>

@@ -27,8 +27,6 @@
         </svg>
         Home
       </a>
-      <!-- view opportunities which have been applied for -->
-      <a href="{{route('pages.applications')}}" title="My Applications" class=" hover:no-underline text-xl font-semibold leading-6 text-gray-900 transition ease-in-out hover:text-customColor">Applications</a>
 
 
       <!-- include partial for seeker's profile; has link to sign out and edit profile and so on -->
