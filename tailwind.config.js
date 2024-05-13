@@ -10,6 +10,11 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Figtree',...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        customColor: "#4ba198",
+        customColorDark: "#2a645e",
+        seekaBlue: "#0a66c2"
       }
     },
   },
