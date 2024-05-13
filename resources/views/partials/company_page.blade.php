@@ -1,6 +1,11 @@
 <body class="bg-white">
   <x-company_header></x-company_header>
 
+  @if (session('success'))
+  <div id="success-alert" class="alert alert-success" data-auto-dismiss="3000">
+    <h1 class="text-gray-900 text-center">{{ session('success') }}</h1>
+  </div>
+  @endif
 
 
   <!-- using a component to display opportunities that have not yet been published to the company  -->
@@ -10,4 +15,15 @@
 
 </body>
 
-
+<script>
+  // Auto-dismiss flash messages after a specified duration
+  document.addEventListener('DOMContentLoaded', function() {
+    const alert = document.getElementById('success-alert');
+    if (alert) {
+      const duration = parseInt(alert.getAttribute('data-auto-dismiss'));
+      setTimeout(function() {
+        alert.remove();
+      }, duration);
+    }
+  });
+</script>

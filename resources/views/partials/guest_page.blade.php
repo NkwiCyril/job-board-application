@@ -2,6 +2,12 @@
   
   <x-guest_header></x-guest_header>
 
+  @if (session('success'))
+  <div id="success-alert" class="alert alert-success" data-auto-dismiss="3000">
+    <h1 class="text-gray-900 text-center">{{ session('success') }}</h1>
+  </div>
+  @endif
+
   <!-- introductory section into the Seeka web application -->
 
   <div class="relative isolate px-6 pt-14 lg:px-8">
@@ -25,3 +31,16 @@
     <x-guest_opp_list :opps="$published_opportunities"></x-guest_opp_list>
   </div>
 </body>
+
+<script>
+  // Auto-dismiss flash messages after a specified duration
+  document.addEventListener('DOMContentLoaded', function() {
+    const alert = document.getElementById('success-alert');
+    if (alert) {
+      const duration = parseInt(alert.getAttribute('data-auto-dismiss'));
+      setTimeout(function() {
+        alert.remove();
+      }, duration);
+    }
+  });
+</script>
