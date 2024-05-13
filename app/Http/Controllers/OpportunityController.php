@@ -1,22 +1,54 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
+
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Opportunity;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Mail\NewOpportunityMail;
 
 class OpportunityController extends Controller
 {
     public function view_opportunity($id) {
-        // return view('pages.view_opportunity');
+        $opportunity = Opportunity::find($id);
+        $published_at = Carbon::parse($opportunity->published_at)->diffForHumans();
+        return view('pages.view_opportunity',[
+            'opportunity' => $opportunity,
+            'published_at' => $published_at,
+        ]);
     }
 
     public function edit_opportunity($id) {
-        // return view('pages.edit_opportunity');
+        $opportunity = Opportunity::find($id);
+        return view('pages.edit_opportunity', [
+            'opportunity' => $opportunity,
+        ]);
     }
+
+    public function update(Request $request, $id) {
+        $request->validate([
+            'title' =>'required',
+            'image_url' =>'required',
+            'description' =>'required',
+            'category_id' =>'required',
+        ]);
+        $opportunity = Opportunity::find($id);
+
+        $opportunity->title = $request->input('title');
+        $opportunity->image_url = $request->input('image_url');
+        $opportunity->description = $request->input('description');
+        $opportunity->category_id = $request->input('category_id');
+
+        $opportunity->save();
+
+        return redirect('/')->with('success', 'Opportunity updated successfully!');
+    }
+
     public function create_opportunity() {
         return view('pages.create_opportunity');
     }
@@ -24,20 +56,11 @@ class OpportunityController extends Controller
     public function store_opportunity(Request $request) {
         $opportunity = $request->all();
         
-        // $fileName = time().$request->file('image_url');
-
         $fileName = $request->file('image_url')->getClientOriginalName();
-
-        // Define the destination path to move the uploaded file
         $destinationPath = public_path('storage/images');
-    
-        // Move the uploaded file to the destination path
         $request->file('image_url')->move($destinationPath, $fileName);
-    
-        // Update the $opportunity['image_url'] with the stored file path
         $opportunity['image_url'] = '/storage/images/' . $fileName;
         
-       
         $new = Opportunity::create([
             'title' => $opportunity['title'],
             'description' => $opportunity['description'],
@@ -48,12 +71,55 @@ class OpportunityController extends Controller
             'updated_at' => now(),
         ]);
 
+
+
         return redirect('/')
-               ->with('success', 'Opportunity added successfully!')
-               ->with('opportunity',$new);
+               ->with('success', 'Opportunity added successfully!');
     }
 
-    public function delete_opportunity($id) {
-        // return view('pages.delete_opportunity');
+    // method to get all published opportunities
+    public function all_published () {
+        $published_opportunities = Opportunity::all()->where('published_at', !null);
+        
+        return view('pages.publish_opportunity', [
+            'published_opportunities' => $published_opportunities,
+        ]);
+    }
+
+    // method to publish an opportunity
+    public function publish_opportunity($id) {
+        $opportunity = Opportunity::find($id);
+        $opportunity->published_at = now();
+        $opportunity->save();
+
+        $seekers = User::all();
+
+        // notify all users of that category via email notification
+        foreach ($seekers as $seeker) {
+            if ($seeker->category === $opportunity->category->category_name) {
+
+                $mailData = [
+                    'opportunity' => $opportunity,
+                    'seeker' => $seeker,
+                ];
+
+                Mail::to($seeker->email)->send(new NewOpportunityMail($mailData));
+            }
+        }
+    
+        return redirect('/')->with('success', 'Opportunity published successfully!');
+    }
+
+    public function unpublish_opportunity($id) {
+        $opportunity = Opportunity::find($id);
+        $opportunity->published_at = null;
+        $opportunity->save();
+
+        return redirect('/')->with('success', 'Opportunity unpublished successfully!');
+    }
+
+    public function delete_opportunity(Request $request, $id) {
+        Opportunity::where('id', $id)->delete(); 
+        return redirect('/')->with('success', 'Opportunity deleted successfully!');
     }
 }

@@ -12,9 +12,21 @@ class LoginController extends Controller
     public function login() {
         return view('auth.login');
     }
-    
-    public function logout() {
-        return view('auth.login');
+
+    public function logout(Request $request) {
+        // change logged in status to false in the database
+        $user = User::where('id', $request->user_id)->first();
+        $user->logged_in = false;
+        $user->save();
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        
+        return redirect('/')->with('success', 'Logged out successfully!');
+
     }
 
     // authenticate users
@@ -24,7 +36,7 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
  
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, true)) {
             $user = User::where('email', $request->email)->first();
             $user->logged_in = true;
             $user->save();

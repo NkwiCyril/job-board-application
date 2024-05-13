@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use App\Models\Opportunity;
-use App\Models\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
@@ -14,10 +14,17 @@ class HomeController extends Controller
     }
 
     public function user_home () {
-        $opportunities = Opportunity::all();
-        // dd($oppotunities);
+        $opportunities = Opportunity::all()->where('published_at', !null);
+
+        // get published and unpublished opportunities for each company
+        $published_opportunities = Opportunity::all()->where('published_at', !null);
+        $unpublished_opportunities = Opportunity::all()->where('published_at', null);
+
+
         return view('pages.home', [
-            'opportunities' => $opportunities
+            'opportunities' => $opportunities,
+            'published_opportunities' => $published_opportunities,
+            'unpublished_opportunities' => $unpublished_opportunities,
         ]);
     }
 }
