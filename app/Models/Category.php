@@ -11,7 +11,7 @@ class Category extends Model
     protected $table = 'category';
     protected $primaryKey = 'id';
 
-    public function opportunity() {
-        return $this->hasMany(Opportunity::class, 'id');
+    public function opportunity () {
+        return $this->hasMany(Opportunity::class, 'opp_id');
     }
 }

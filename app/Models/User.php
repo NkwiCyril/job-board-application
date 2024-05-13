@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as AuthenticatableUser;
-
+use Illuminate\Notifications\Notifiable;
 
 class User extends AuthenticatableUser
 {
     use HasFactory;
+
 
     protected $table = 'user';
     protected $primaryKey = 'id';
@@ -25,11 +26,11 @@ class User extends AuthenticatableUser
         'password'
     ];
 
-    public function application() {
-        return $this->hasMany(Application::class, 'id')->where('usertype','seeker');
+    public function application () {
+        return $this->hasMany(Application::class, 'id');
     }
 
-    public function opportunity() {
-        return $this->hasMany(Opportunity::class, 'id')->where('usertype','company');
+    public function opportunity () {
+        return $this->hasMany(Opportunity::class, 'id');
     }
 }

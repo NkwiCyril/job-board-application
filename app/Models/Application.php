@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Application extends Model
 {
@@ -11,8 +12,23 @@ class Application extends Model
     protected $table = 'application';
     protected $primaryKey = 'id';
 
-    public function user()
+    public $timestamps = false;
+
+
+    protected $fillable = [
+        'user_id',
+        'opp_id',
+        'bio',
+        'cv_link',
+        'application_date'
+    ];
+
+    public function user ()
     {
-        return $this->belongsTo(User::class, 'id')->where('usertype', 'seeker');
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function opportunity () {
+        return $this->belongsTo(Opportunity::class, 'opp_id');
     }
 }
