@@ -25,7 +25,7 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         
-        return redirect('/')->with('success', 'Logged out successfully!');
+        return redirect('/')->with('success', 'You have logged out successfully!');
 
     }
 
@@ -47,6 +47,7 @@ class LoginController extends Controller
 
             return redirect()->intended('/')->with([
                 'user' => $new,
+                'success' => 'Welcome! You have successfully logged in.',
             ]);
 
             

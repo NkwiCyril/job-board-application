@@ -1,5 +1,17 @@
 @extends('layout.app')
 
+@if (session('success'))
+<!-- Alert Banner -->
+<div id="success-alert" class=" alert alert-success hs-removing:-translate-y-full bg-customColor mt-20" data-auto-dismiss="2000">
+  <div class="max-w-[85rem] p-2 sm:px-6 lg:px-8 mx-auto">
+    <div class="flex">
+      <p class="text-white"> {{ session('success') }} </p>
+    </div>
+  </div>
+</div>
+<!-- End Alert Banner -->
+@endif
+
 @section('content')
 
 <body class=" h-full">
@@ -52,3 +64,16 @@
   </div>
 </body>
 @endsection
+
+<script>
+  // Auto-dismiss flash messages after a specified duration
+  document.addEventListener('DOMContentLoaded', function() {
+    const alert = document.getElementById('success-alert');
+    if (alert) {
+      const duration = parseInt(alert.getAttribute('data-auto-dismiss'));
+      setTimeout(function() {
+        alert.remove();
+      }, duration);
+    }
+  });
+</script>

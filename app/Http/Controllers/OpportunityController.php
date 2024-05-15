@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Mail\NewOpportunityMail;
+ 
 
 class OpportunityController extends Controller
 {
@@ -31,22 +32,18 @@ class OpportunityController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $request->validate([
+        // get the image url
+        $validatedData = $request->validate([
             'title' =>'required',
             'image_url' =>'required',
             'description' =>'required',
-            'category_id' =>'required',
+            'category_id' =>['required' => 'max:1'],
         ]);
         $opportunity = Opportunity::find($id);
 
-        $opportunity->title = $request->input('title');
-        $opportunity->image_url = $request->input('image_url');
-        $opportunity->description = $request->input('description');
-        $opportunity->category_id = $request->input('category_id');
+        $opportunity->update($validatedData);
 
-        $opportunity->save();
-
-        return redirect('/')->with('success', 'Opportunity updated successfully!');
+        return redirect('/')->with('success', 'Opportunity has been updated successfully!');
     }
 
     public function create_opportunity() {
@@ -71,10 +68,8 @@ class OpportunityController extends Controller
             'updated_at' => now(),
         ]);
 
-
-
         return redirect('/')
-               ->with('success', 'Opportunity added successfully!');
+               ->with('success', 'Opportunity has been created successfully!');
     }
 
     // method to get all published opportunities
@@ -107,9 +102,10 @@ class OpportunityController extends Controller
             }
         }
     
-        return redirect('/')->with('success', 'Opportunity published successfully!');
-    }
+        return redirect('/')->with('success', 'Opportunity published successfully! All published opportunities will be deleted after 30 days');
 
+}
+    // unpublish an opportunity 
     public function unpublish_opportunity($id) {
         $opportunity = Opportunity::find($id);
         $opportunity->published_at = null;
@@ -118,7 +114,8 @@ class OpportunityController extends Controller
         return redirect('/')->with('success', 'Opportunity unpublished successfully!');
     }
 
-    public function delete_opportunity(Request $request, $id) {
+    // delete an opportunity from the database
+    public function delete_opportunity($id) {
         Opportunity::where('id', $id)->delete(); 
         return redirect('/')->with('success', 'Opportunity deleted successfully!');
     }

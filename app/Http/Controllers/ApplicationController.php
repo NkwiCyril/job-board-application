@@ -30,23 +30,29 @@ class ApplicationController extends Controller
     public function send_application(Request $request, $opp_id) {     
         // validate incoming input
         $request->validate([
-            'full-name'=> 'required',
+            'name'=> 'required',
             'email'=> 'required',
-            'phone-number'=> 'required',
+            'phone_number'=> 'required',
             'resume'=> 'required',
             'bio'=> 'required',
         ]);
 
-        if (Auth::check()) {
-            $application = $request->all();
+        $application = $request->all();
 
-            // get the resume file and keep in storage
-            $fileName = $request->file('resume')->getClientOriginalName();
-            $destinationPath = public_path('storage/files');
-            $request->file('resume')->move($destinationPath, $fileName);
-            $application['resume'] = '/storage/files/' . $fileName;
+        $opp = Opportunity::find($opp_id);
+
+
+        // get the resume file and keep in storage
+        $fileName = $request->file('resume')->getClientOriginalName();
+        $destinationPath = public_path('storage/files');
+        $request->file('resume')->move($destinationPath, $fileName);
+        $application['resume'] = '/storage/files/' . $fileName;
+        
+        if (Auth::check()) {
             
-    
+            // since the user is authenticated, we need to save the application in the database 
+            // for them to access later and see the progress of the application
+
             $new_application = Application::create([
                 'cv_link' => $application['resume'],
                 'bio' => $application['bio'],
@@ -57,7 +63,6 @@ class ApplicationController extends Controller
 
             // send email to the user
             $seeker = Auth::user();
-            $opp = Opportunity::find($opp_id);
             $company = User::find($opp->user_id);
             $mailData = [
                 'company' => $company,
@@ -66,10 +71,24 @@ class ApplicationController extends Controller
             ];
 
             Mail::to($company->email)->send(new ApplicationMail($mailData));
-            return redirect('/')->with('success', 'Application has been sent!');
+            return redirect('/')->with('success', 'Your application has been sent successfully via gmail to ' . $company->name);
 
         } else {
 
+            // for a guest user, we need to only send email to the company with guests credentials
+
+            $company = User::find($opp->user_id);
+            $mailData = [
+                'company' => $company,
+                'opp' => $opp,
+                'guest' => $application 
+            ];
+
+            Mail::to($company->email)->send(new ApplicationMail($mailData));
+
+            return redirect('/')->with('success', 'Your application has been sent successfully via gmail to ' . $company->name);
+            
         }
+
     }
 }

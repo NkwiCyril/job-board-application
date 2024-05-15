@@ -26,7 +26,7 @@ class RegisterController extends Controller
             'updated_at' => now(),
         ]);
         
-        return redirect()->route('auth.login')->with('success','Registered Successfully!');
+        return redirect()->route('auth.login')->with('success','Registeration Successfully. Now Login!');
         
     }
 }
