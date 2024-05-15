@@ -1,3 +1,16 @@
+<!-- general: for guests, company and seeker -->
+
+<!-- <div class="flex-1 justify-center items-center mb-5">
+  <div class="flex-col items-center justify-center gap-2 mx-auto">
+    <form action="" method="POST" class="flex gap-1 justify-center">
+      <input autocomplete type="text" name="search" id="search_field" class=" w-3/4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customColor focus:border-customColor block p-2.5 white:bg-gray-700 dark:placeholder-gray-600 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search by job title, category or company">
+      <button type="submit" class="rounded-lg px-2 py-1 text-sm font-semibold  text-white bg-customColor ring-1 ring-inset ring-customColor hover:no-underline hover:bg-customColorDark">
+        Search
+      </button>
+    </form>
+  </div>
+</div> -->
+
 <!-- loop through all opportunities and display accordingly -->
 <div>
 
@@ -86,16 +99,3 @@
 
 </div>
 
-<!-- general: for guests, company and seeker -->
-
-<div class="flex-1 justify-between items-center ">
-  <!-- search and filter opportunities -->
-  <div class="flex-col items-center justify-end gap-2">
-    <form action="" method="POST" class="flex gap-1 justify-end">
-      <input autocomplete type="text" name="search" id="search_field" class=" w-3/4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customColor focus:border-customColor block p-2.5 white:bg-gray-700 dark:placeholder-gray-600 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search by job title, category or company">
-      <button type="submit" class="rounded-lg px-2 py-1 text-sm font-semibold  text-white bg-customColor ring-1 ring-inset ring-customColor hover:no-underline hover:bg-customColorDark">
-        Search
-      </button>
-    </form>
-  </div>
-</div>

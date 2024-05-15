@@ -23,7 +23,7 @@
           <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 mt-2  py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Volunteer</span>
           @endif
         </div>
-        <a href="{{route('pages.opportunity', $oop['title'])}}" class="block mt-1 text-lg leading-tight font-medium text-black hover:no-underline hover:text-customColor">{{$oop->title}}</a>
+        <a href="{{route('pages.opportunity', $oop['id'])}}" class="block mt-1 text-lg leading-tight font-medium text-black hover:no-underline hover:text-customColor">{{$oop->title}}</a>
         <p class="mt-2 text-slate-500">
 
           <!-- php script to trim the description if very long to conserve space -->
@@ -71,8 +71,7 @@
 
 <!-- general: for guests, company and seeker -->
 
-<div class="flex-1 justify-between items-center ">
-  <!-- search and filter opportunities -->
+<!-- <div class="flex-1 justify-between items-center ">
   <div class="flex-col items-center justify-end gap-2">
     <form action="" method="POST" class="flex gap-1 justify-end">
       <input autocomplete type="text" name="search" id="search_field" class=" w-3/4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customColor focus:border-customColor block p-2.5 white:bg-gray-700 dark:placeholder-gray-600 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search by job title, category or company">
@@ -81,4 +80,4 @@
       </button>
     </form>
   </div>
-</div>
+</div> -->
