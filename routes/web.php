@@ -35,15 +35,11 @@ Route::get('/', [HomeController::class, 'user_home'])->name('pages.home');
 Route::get('/welcome', [HomeController::class, 'index'])->name('welcome');
 
 
-// routes concerned with profile
-Route::get('profile/{id}', [ProfileController::class, 'view_profile'])->name('pages.profile');
-Route::patch('profile/edit/{id}', [ProfileController::class, 'edit_profile'])->name('pages.edit_profile');
-
 // routes concerned with opportunities
 Route::get('opportunity/create', [OpportunityController::class, 'create_opportunity'])->name('pages.create_opportunity');
 Route::post('opportunity/create', [OpportunityController::class,'store_opportunity'])->name('pages.store_opportunity');
 Route::get('opportunity/edit/{id}', [OpportunityController::class, 'edit_opportunity'])->name('pages.edit_opportunity');
-Route::put('opportunity/edit/{id}', [OpportunityController::class, 'update'])->name('pages.update');
+Route::post('opportunity/edit/{id}', [OpportunityController::class, 'update'])->name('pages.update');
 Route::get('opportunity/delete/{id}', [OpportunityController::class, 'delete_opportunity'])->name('pages.delete_opportunity');
 Route::get('opportunity/publish', [OpportunityController::class, 'all_published'])->name('pages.publish_opportunity');
 Route::get('opportunity/{id}', [OpportunityController::class, 'view_opportunity'])->name('pages.opportunity');
