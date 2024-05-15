@@ -11,7 +11,6 @@
 </head>
 
 <style>
-
   * {
     font-family: 'Figtree', sans-serif;
   }
@@ -33,7 +32,8 @@
   }
 
   h2 {
-    color: #4a5568;
+    color: #ffffff;
+    font-weight: bold;
     /* Text color */
   }
 
@@ -54,7 +54,7 @@
     font-weight: 500;
     text-transform: capitalize;
     color: #ffffff;
-    background-color: #2563eb;
+    background-color: #4ba198;
     /* Button background color */
     border: none;
     border-radius: 0.375rem;
@@ -121,10 +121,11 @@
 </style>
 
 <body>
+  @if (Auth::check())
   <section class="max-w-2xl px-6 py-8 mx-auto bg-white dark:bg-gray-900">
     <header>
       <a href="#">
-        <img class="w-auto h-7 sm:h-8" src="{{asset('seeka_logo.png')}}" alt="seeka logo">
+        <img class="w-auto h-7 sm:h-8" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgwobywG7TguZH034xfClS4qOYPH_dT05wJg&usqp=CAU" alt="seeka logo">
       </a>
     </header>
 
@@ -159,6 +160,59 @@
       </p>
     </footer>
   </section>
+
+  @else
+  
+  <section class="max-w-2xl px-6 py-8 mx-auto bg-white dark:bg-gray-900">
+    <header>
+      <a href="#">
+        <img class="w-auto h-7 sm:h-8" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgwobywG7TguZH034xfClS4qOYPH_dT05wJg&usqp=CAU" alt="seeka logo">
+      </a>
+    </header>
+
+    <main class="mt-8">
+      <h2 class="text-gray-700 dark:text-gray-200">Hello, {{$mailData['company']->name}}</h2>
+
+      <p class="mt-2 leading-loose text-gray-600 dark:text-gray-300">
+        {{$mailData['guest']['name']}}, who is a guest, has submitted a new application on your <span class="font-semibold ">{{$mailData['opp']->title}}</span> role.
+      </p>
+
+      <h3 class="text-gray-700 dark:text-gray-200">Application Details:</h3>
+      <ul>
+        <li>Name: {{$mailData['guest']['name']}}</li>
+        <li>Email: {{$mailData['guest']['email']}}</li>
+        <li>Phone: {{$mailData['guest']['phone_number']}}</li>
+        <li>Bio: {{$mailData['guest']['bio']}}</li>
+      </ul>
+      <button class="px-6 py-2 mt-4 text-sm font-medium tracking-wider text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+        Download CV
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white">
+          <path fill-rule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v11.69l3.22-3.22a.75.75 0 1 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 1 1 1.06-1.06l3.22 3.22V3a.75.75 0 0 1 .75-.75Zm-9 13.5a.75.75 0 0 1 .75.75v2.25a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V16.5a.75.75 0 0 1 1.5 0v2.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V16.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
+        </svg>
+
+      </button>
+      </button>
+
+
+      <p class="mt-8 text-gray-600 dark:text-gray-300">
+        Thanks, <br>
+        Seeka team
+      </p>
+    </main>
+
+
+    <footer class="mt-8">
+      <p class="text-gray-500 dark:text-gray-400">
+        This email was sent from <a href="http://127.0.0.1:8000" class="text-blue-600 hover:underline dark:text-blue-400" target="_blank">Seeka</a>.
+      </p>
+
+      <p class="mt-3 text-gray-500 dark:text-gray-400">©
+        Seeka. All Rights Reserved.
+      </p>
+    </footer>
+  </section>
+  @endif
+
 </body>
 
 </html>

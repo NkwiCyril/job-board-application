@@ -33,8 +33,8 @@
   }
 
   h2 {
-    color: #4a5568;
-    /* Text color */
+    color: #ffffff;
+    font-weight: bold;
   }
 
   p {
