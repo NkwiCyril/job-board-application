@@ -29,7 +29,7 @@
                 <span class="btn btn-outline-secondary btn-file hover:bg-customColor">
                   <span class="fileinput-new">Select Image</span>
                   <span class="fileinput-exists">Change</span>
-                  <input type="file" name="image_url" accept="image/*" value="{{$opportunity->image_url}}">
+                  <input type="file" name="image_url" accept="image/*" value="{{$opportunity->image_url}}" >
                 </span>
               </div>
             </div>
