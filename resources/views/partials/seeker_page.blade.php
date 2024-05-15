@@ -3,13 +3,19 @@
   <x-seeker_header></x-seeker_header>
 
   @if (session('success'))
-  <div id="success-alert" class="alert alert-success" data-auto-dismiss="3000">
-    <h1 class="text-gray-900 text-center">{{ session('success') }}</h1>
+<!-- Alert Banner -->
+<div id="success-alert" class=" alert alert-success hs-removing:-translate-y-full bg-customColor mt-20" data-auto-dismiss="3000">
+  <div class="max-w-[85rem] p-2 sm:px-6 lg:px-8 mx-auto">
+    <div class="flex">
+      <p class="text-white"> {{ session('success') }} </p>
+    </div>
   </div>
-  @endif
+</div>
+<!-- End Alert Banner -->
+@endif
 
   <!-- using a component to display opportunities that have not yet been published to the company  -->
-  <div class="grid grid-cols-2 sm:flex-col mt-20 mx-20 p-10">
+  <div class="grid grid-cols-1 sm:flex-col mt-20 mx-20 p-10">
     <x-seeker_opp_list :opps="$published_opportunities"></x-seeker_opp_list>
   </div>
   

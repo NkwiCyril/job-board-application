@@ -1,14 +1,20 @@
 <body class="bg-white">
-  
-  <x-guest_header></x-guest_header>
 
-  @if (session('success'))
-  <div id="success-alert" class="alert alert-success" data-auto-dismiss="3000">
-    <h1 class="text-gray-900 text-center">{{ session('success') }}</h1>
+<x-guest_header></x-guest_header>
+
+@if (session('success'))
+<!-- Alert Banner -->
+<div id="success-alert" class=" alert alert-success hs-removing:-translate-y-full bg-customColor mt-20" data-auto-dismiss="2000">
+  <div class="max-w-[85rem] p-2 sm:px-6 lg:px-8 mx-auto">
+    <div class="flex">
+      <p class="text-white"> {{ session('success') }} </p>
+    </div>
   </div>
-  @endif
+</div>
+<!-- End Alert Banner -->
+@endif
 
-  <!-- introductory section into the Seeka web application -->
+<!-- introductory section into the Seeka web application -->
 
   <div class="relative isolate px-6 pt-14 lg:px-8">
     <div class="mx-auto max-w-2xl sm:py-48 lg:py-40">
@@ -25,9 +31,9 @@
       </div>
     </div>
   </div>
-  </div>
+
   <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-3xl text-center py-2">Start applying as a guest.</h1>
-  <div class="grid grid-cols-2 sm:flex-col mx-2 py-2 px-5">
+  <div class="grid grid-cols-1 sm:flex-col mx-2 py-2 px-5">
     <x-guest_opp_list :opps="$published_opportunities"></x-guest_opp_list>
   </div>
 </body>
