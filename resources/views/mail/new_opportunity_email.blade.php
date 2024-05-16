@@ -129,7 +129,7 @@
   <section class="max-w-2xl px-6 py-8 mx-auto bg-white dark:bg-gray-900">
     <header>
       <a href="#">
-        <img class="w-auto h-7 sm:h-8" src="{{asset('seeka_logo.png')}}" alt="seeka logo">
+        <img class="w-auto h-7 sm:h-8" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgwobywG7TguZH034xfClS4qOYPH_dT05wJg&usqp=CAU" alt="seeka logo">
       </a>
     </header>
 
