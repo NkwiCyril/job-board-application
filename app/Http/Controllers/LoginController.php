@@ -14,6 +14,7 @@ class LoginController extends Controller
     }
 
     public function logout(Request $request) {
+
         // change logged in status to false in the database
         $user = User::where('id', $request->user_id)->first();
         $user->logged_in = false;
@@ -30,31 +31,31 @@ class LoginController extends Controller
     }
 
     // authenticate users
-    public function authenticate(Request $request) {        
+    public function authenticate(Request $request) {     
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'email' => 'required|email',
+            'password' => 'required|string',
+            'rememder_me' => 'string',
         ]);
- 
-        if (Auth::attempt($credentials, true)) {
+
+        $remember = $request['remember_me'] === 'on' ? true : false;
+
+        if (Auth::attempt($credentials, $remember)) {
             $user = User::where('email', $request->email)->first();
             $user->logged_in = true;
             $user->save();
             
             $request->session()->regenerate();
             $new = session()->get('user');
-            // $redirectPath = $user->usertype === 'seeker' ? 'seeker/home' : 'company/home';
-
+    
             return redirect()->intended('/')->with([
                 'user' => $new,
                 'success' => 'Welcome! You have successfully logged in.',
             ]);
-
-            
+        } else {
+            return back()->withErrors([
+                'error' => 'The provided email/password do not match our records!',
+            ]);
         }
- 
-        return back()->withErrors([
-            'email' => 'The provided email/password do not match our records!',
-        ])->onlyInput('email');
     }
 }
