@@ -98,13 +98,15 @@ class OpportunityController extends Controller
                     'seeker' => $seeker,
                 ];
 
-                Mail::to($seeker->email)->send(new NewOpportunityMail($mailData));
+                Mail::to($seeker->email)->queue(new NewOpportunityMail($mailData));
+                
             }
         }
     
         return redirect('/')->with('success', 'Opportunity published successfully! All published opportunities will be deleted after 30 days');
 
 }
+
     // unpublish an opportunity 
     public function unpublish_opportunity($id) {
         $opportunity = Opportunity::find($id);
