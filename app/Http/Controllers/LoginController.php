@@ -9,13 +9,13 @@ use App\Models\User;
 
 class LoginController extends Controller
 {
-    public function login() {
+    public function login () {
         return view('auth.login');
     }
 
-    public function logout(Request $request) {
+    public function logout (Request $request) {
 
-        // change logged in status to false in the database
+        // change logged_in status to false in the database
         $user = User::where('id', $request->user_id)->first();
         $user->logged_in = false;
         $user->save();
@@ -31,7 +31,7 @@ class LoginController extends Controller
     }
 
     // authenticate users
-    public function authenticate(Request $request) {     
+    public function authenticate (Request $request) {     
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required|string',
@@ -41,7 +41,7 @@ class LoginController extends Controller
         $remember = $request['remember_me'] === 'on' ? true : false;
 
         if (Auth::attempt($credentials, $remember)) {
-            $user = User::where('email', $request->email)->first();
+            $user = User::where('email', $credentials['email'])->first();
             $user->logged_in = true;
             $user->save();
             
