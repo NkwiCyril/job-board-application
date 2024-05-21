@@ -14,12 +14,11 @@ use Illuminate\Http\Request;
 class ApplicationController extends Controller
 {
 
-
-    public function all_application() {
+    public function all () {
         return view('all_applications');
     }
 
-    public function view_application_form($id) {
+    public function view ($id) {
         $opportunity = Opportunity::find($id);
 
         return view('pages.application', [
@@ -27,9 +26,9 @@ class ApplicationController extends Controller
         ]);
     }
 
-    public function send_application(Request $request, $opp_id) {     
+    public function send (Request $request, $opp_id) {     
         // validate incoming input
-        $request->validate([
+        $validatedData = $request->validate([
             'name'=> 'required',
             'email'=> 'required',
             'phone_number'=> 'required',
@@ -37,25 +36,22 @@ class ApplicationController extends Controller
             'bio'=> 'required',
         ]);
 
-        $application = $request->all();
-
         $opp = Opportunity::find($opp_id);
-
-
-        // get the resume file and keep in storage
-        $fileName = $request->file('resume')->getClientOriginalName();
-        $destinationPath = public_path('storage/files');
-        $request->file('resume')->move($destinationPath, $fileName);
-        $application['resume'] = '/storage/files/' . $fileName;
         
         if (Auth::check()) {
             
+        // get the resume file and keep in storage
+            $fileName = $request->file('resume')->getClientOriginalName();
+            $destinationPath = public_path('storage/files');
+            $request->file('resume')->move($destinationPath, $fileName);
+            $validatedData['resume'] = '/storage/files/' . $fileName;
+
             // since the user is authenticated, we need to save the application in the database 
             // for them to access later and see the progress of the application
 
             $new_application = Application::create([
-                'cv_link' => $application['resume'],
-                'bio' => $application['bio'],
+                'cv_link' => $validatedData['resume'],
+                'bio' => $validatedData['bio'],
                 'opp_id' => $opp_id,
                 'user_id' => Auth::user()->id,
                 'application_date' => now(),
@@ -70,25 +66,30 @@ class ApplicationController extends Controller
                 'opp' => $opp,
             ];
 
-            Mail::to($company->email)->send(new ApplicationMail($mailData));
+            Mail::to($company->email)->queue(new ApplicationMail($mailData));
             return redirect('/')->with('success', 'Your application has been sent successfully via gmail to ' . $company->name);
 
         } else {
 
             // for a guest user, we need to only send email to the company with guests credentials
 
+            // get the resume file and keep in storage
+            $fileName = $request->file('resume')->getClientOriginalName();
+            $destinationPath = public_path('storage/files');
+            $request->file('resume')->move($destinationPath, $fileName);
+            $validatedData['resume'] = '/storage/files/' . $fileName;
+
             $company = User::find($opp->user_id);
             $mailData = [
                 'company' => $company,
                 'opp' => $opp,
-                'guest' => $application 
+                'guest' => $validatedData 
             ];
 
-            Mail::to($company->email)->send(new ApplicationMail($mailData));
+            Mail::to($company->email)->queue(new ApplicationMail($mailData));
 
-            return redirect('/')->with('success', 'Your application has been sent successfully via gmail to ' . $company->name);
+            return redirect('/register')->with('success', 'Your application has been sent! Register Now to get notifications on opportunity posts.');
             
         }
-
     }
 }

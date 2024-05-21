@@ -13,6 +13,8 @@
   <link href="{{asset("assets/css/bootstrap.min.css")}}" rel="stylesheet">
   <link href="{{asset("assets/css/jasny-bootstrap.min.css")}}" rel="stylesheet">
   <link href="{{asset("assets/css/custom.css")}}" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
   
   @vite('resources/css/app.css')
   <title>@yield('title', 'Seeka - Job Board')</title>

@@ -24,32 +24,32 @@ Route::post('login', [LoginController::class, 'authenticate'])->name('auth.authe
 
 
 // register routes
-Route::get('register', [RegisterController::class, 'register'])->name('auth.register');
-Route::post('register', [RegisterController::class,'register_user'])->name('auth.register');
+Route::get('register', [RegisterController::class, 'index'])->name('auth.register');
+Route::post('register', [RegisterController::class,'register'])->name('auth.register');
 
 
 
-// routes concerned with home page (all users, seeker or company)
-Route::get('/', [HomeController::class, 'user_home'])->name('pages.home');
+// routes concerned with home page (guest, seeker and company)
 Route::get('/welcome', [HomeController::class, 'index'])->name('welcome');
+Route::get('/', [HomeController::class, 'home'])->name('pages.home');
 
 
 // routes concerned with opportunities
-Route::get('opportunity/create', [OpportunityController::class, 'create_opportunity'])->name('pages.create_opportunity');
-Route::post('opportunity/create', [OpportunityController::class,'store_opportunity'])->name('pages.store_opportunity');
-Route::get('opportunity/edit/{id}', [OpportunityController::class, 'edit_opportunity'])->name('pages.edit_opportunity');
+Route::get('opportunity/create', [OpportunityController::class, 'create'])->name('pages.create_opportunity');
+Route::post('opportunity/create', [OpportunityController::class,'store'])->name('pages.store_opportunity');
+Route::get('opportunity/edit/{id}', [OpportunityController::class, 'edit'])->name('pages.edit_opportunity');
 Route::post('opportunity/edit/{id}', [OpportunityController::class, 'update'])->name('pages.update');
-Route::get('opportunity/delete/{id}', [OpportunityController::class, 'delete_opportunity'])->name('pages.delete_opportunity');
-Route::get('opportunity/publish', [OpportunityController::class, 'all_published'])->name('pages.publish_opportunity');
-Route::get('opportunity/{id}', [OpportunityController::class, 'view_opportunity'])->name('pages.opportunity');
-Route::get('opportunity/publish/{id}', [OpportunityController::class, 'publish_opportunity'])->name('pages.publish');
-Route::get('opportunity/unpublish/{id}', [OpportunityController::class, 'unpublish_opportunity'])->name('pages.unpublish');
+Route::get('opportunity/delete/{id}', [OpportunityController::class, 'delete'])->name('pages.delete_opportunity');
+Route::get('opportunity/publish', [OpportunityController::class, 'publish_all'])->name('pages.publish_opportunity');
+Route::get('opportunity/{id}', [OpportunityController::class, 'view'])->name('pages.opportunity');
+Route::get('opportunity/publish/{id}', [OpportunityController::class, 'publish'])->name('pages.publish');
+Route::get('opportunity/unpublish/{id}', [OpportunityController::class, 'unpublish'])->name('pages.unpublish');
 
 
 // routes concerned with applications
-Route::get('applications', [ApplicationController::class, 'all_application'])->name('pages.applications');
-Route::post('application/submit/{opp_id}', [ApplicationController::class, 'send_application'])->name('pages.submit_application');
-Route::get('application/{id}', [ApplicationController::class, 'view_application_form'])->name('pages.application');
+Route::get('applications', [ApplicationController::class, 'all'])->name('pages.applications');
+Route::post('application/submit/{opp_id}', [ApplicationController::class, 'send'])->name('pages.submit_application');
+Route::get('application/{id}', [ApplicationController::class, 'view'])->name('pages.application');
 
 // fallback 404 view in case of invalid route parameters
 Route::fallback(function() {

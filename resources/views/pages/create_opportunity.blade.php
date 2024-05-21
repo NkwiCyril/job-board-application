@@ -14,12 +14,16 @@
 
       <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
         <div class="sm:col-span-2">
-          <input type="text" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customColor focus:border-customColor block w-full p-2.5dark:placeholder-gray-400 dark: dark:focus:border-primary-500" placeholder="Opportunity Title" required>
+          <input type="text" name="title" id="title" value="{{old('title')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customColor focus:border-customColor block w-full p-2.5dark:placeholder-gray-400 dark: dark:focus:border-primary-500" placeholder="Opportunity Title" required>
         </div>
+
+        @error('title')
+        <em class=" text-sm text-danger">{{$message}}</em>
+        @enderror
 
         <div>
           <div class="form-group items-center">
-            <!-- <label for="bio" class="mb-2 text-sm font-medium text-gray-900 ">Opportunity Image</label> -->
+            <!-- <label for="bio" class="mb-2 text-sm font-medium text-gray-900 ">Oppportunity Image</label> -->
             <div class="fileinput fileinput-new" data-provides="fileinput">
               <div class="fileinput-new img-thumbnail" style="width: 150px; height: 150px;">
                 <img src="https://via.placeholder.com/150x150" alt="opportunity choosen image">
@@ -31,6 +35,9 @@
                   <span class="fileinput-exists">Change</span>
                   <input type="file" name="image_url" accept="image/*" required>
                 </span>
+                @error('image_url')
+                <em class=" text-sm text-danger">{{$message}}</em>
+                @enderror
               </div>
             </div>
           </div>
@@ -45,13 +52,20 @@
             <option value="3">Volunteerism</option>
           </select>
         </div>
+        @error('category')
+        <em class=" text-sm text-danger">{{$message}}</em>
+        @enderror
 
 
 
         <div class="sm:col-span-2">
           <label for="description" class="block mb-2 text-sm font-medium text-gray-900">Description</label>
-          <textarea required id="description" name="description" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customColor focus:border-customColor dark:placeholder-gray-400" placeholder="Opportunity description here"></textarea>
+          <textarea required id="description" name="description" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customColor focus:border-customColor dark:placeholder-gray-400" placeholder="Opportunity description here">{{old('description')}}</textarea>
         </div>
+        @error('description')
+        <em class=" text-sm text-danger">{{$message}}</em>
+        @enderror
+
       </div>
       <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 font-medium text-center text-white bg-customColor border-gray-400 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-customColorDark">
         Create

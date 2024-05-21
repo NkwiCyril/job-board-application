@@ -43,8 +43,8 @@
           <!-- rest of the content will be shown in the view_oop page -->
           @php
           $desc = $oop['description'];
-          if (($desc) > 50) {
-          $desc = substr($desc, 0, 50). '...';
+          if (($desc) > 100) {
+          $desc = substr($desc, 0, 100). '...';
           }
           @endphp
           {{$desc}}
@@ -73,21 +73,42 @@
             Edit
           </a>
         </button>
-        <button class="my-2 uppercase">
-          <a href="{{route('pages.delete_opportunity', $oop->id)}}" onclick="confirmation()" class="flex gap-1 items-center justify-center px-2 py-1 text-xs font-semibold  text-white bg-customColor ring-1 ring-inset ring-customColor hover:no-underline hover:bg-rose-500">
-            Delete
-          </a>
-        </button>
-        
-          @if ($unpublish)
-            <p class="text-[12px] text-gray-500 font-medium pb-2">Created {{$oop->created_at->diffForHumans()}}</p>  
-          @else
-            <p class="text-[12px] text-gray-500 font-medium pb-2">Published {{
+        {{-- <button class="my-2 uppercase">
+          <a href="{{route('pages.delete_opportunity', $oop->id)}}" onclick="confirmation()" class="flex gap-1 items-center justify-center px-2 py-1 text-xs font-semibold text-white bg-customColor ring-1 ring-inset ring-customColor hover:no-underline hover:bg-rose-500">
+        Delete
+        </a>
+        </button> --}}
+
+        <div x-data="{ showConfirm: false }">
+          <button class="my-2 uppercase" @click.prevent="showConfirm = true">
+            <span class="flex gap-1 items-center justify-center px-2 py-1 text-xs font-semibold text-white bg-customColor ring-1 ring-inset ring-customColor hover:no-underline hover:bg-rose-500">
+              Delete
+            </span>
+          </button>
+
+          <div x-show="showConfirm" class="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-50">
+            <div class="bg-white p-6 rounded shadow-lg">
+              <h2 class="text-lg font-semibold mb-4">Are you sure you want to delete this oppportunity?</h2>
+              <div class="flex justify-end">
+                <button @click="showConfirm = false" class="mr-2 px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+                <a href="{{ route('pages.delete_opportunity', $oop->id) }}" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Confirm</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        @if ($unpublish)
+        <p class="text-[12px] text-gray-500 font-medium pb-2">Created {{$oop->created_at->diffForHumans()}}</p>
+        @else
+        <p class="text-[12px] text-gray-500 font-medium pb-2">Published
+          {{
 
               Carbon\Carbon::parse($oop->published_at)->diffForHumans()
 
-            }}</p>  
-          @endif
+            }}
+        </p>
+        @endif
 
 
       </div>
@@ -98,4 +119,3 @@
   @endif
 
 </div>
-
