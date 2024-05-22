@@ -19,7 +19,7 @@
 <body class=" h-full">
   <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <a href="{{route('pages.home')}}">
+      <a href="{{route('home.index')}}">
         <img class="mx-auto h-12 w-auto" src="/seeka_logo.png" alt="seeka">
       </a>
       <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
@@ -32,7 +32,7 @@
       </div>
       @endif
 
-      <form class="space-y-3" action="{{route('auth.authenticate')}}" method="POST">
+      <form class="space-y-3" action="{{route('auth.login')}}" method="POST">
         @csrf
 
         <div>

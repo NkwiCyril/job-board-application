@@ -8,10 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+
     protected $table = 'category';
+
     protected $primaryKey = 'id';
 
-    public function opportunity () {
+    public function opportunity()
+    {
         return $this->hasMany(Opportunity::class, 'opp_id');
     }
 }

@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Validator;
+
 class RegisterController extends Controller
 {
-
-    public function index () {
+    public function index()
+    {
         return view('auth.register');
     }
 
-    public function register (Request $request) {
+    public function register(Request $request)
+    {
 
         // validate all inputs
         $valid_request = $request->validate([
@@ -36,9 +36,9 @@ class RegisterController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        
+
         if ($user) {
-            return redirect()->route('auth.login')->with('success','Registration Successfully. Now Login!');
+            return redirect()->route('auth.index')->with('success', 'Registration Successfully. Now Login!');
         }
     }
 }

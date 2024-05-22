@@ -121,7 +121,7 @@
 </style>
 
 <body>
-  @if (Auth::check())
+  @if (auth()->check())
   <section class="max-w-2xl px-6 py-8 mx-auto bg-white dark:bg-gray-900">
     <header>
       <a href="#">

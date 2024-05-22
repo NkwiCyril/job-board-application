@@ -14,6 +14,7 @@ class NewOpportunityMail extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $mailData;
+
     /**
      * Create a new message instance.
      */

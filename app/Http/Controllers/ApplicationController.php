@@ -2,63 +2,70 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Mail\ApplicationMail;
-use App\Models\Opportunity;
 use App\Models\Application;
+use App\Models\Opportunity;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ApplicationController extends Controller
 {
-
-    public function all () {
-        return view('all_applications');
-    }
-
-    public function view ($id) {
+    /**
+     * Show the application form for creating an application
+     * @param int $id
+     */
+    public function create($id): View
+    {
         $opportunity = Opportunity::find($id);
 
-        return view('pages.application', [
+        return view('applications.create', [
             'opportunity' => $opportunity,
         ]);
     }
 
-    public function send (Request $request, $opp_id) {     
+
+    /**
+     * Store new application in the database and send notification 
+     * @param int $id
+     * @param object $request
+     */
+    public function store(Request $request, $opp_id): RedirectResponse
+    {
         // validate incoming input
         $validatedData = $request->validate([
-            'name'=> 'required',
-            'email'=> 'required',
-            'phone_number'=> 'required',
-            'resume'=> 'required',
-            'bio'=> 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'phone_number' => 'required',
+            'resume' => 'required',
+            'bio' => 'required',
         ]);
 
         $opp = Opportunity::find($opp_id);
-        
-        if (Auth::check()) {
-            
-        // get the resume file and keep in storage
+
+        if (auth()->check()) {
+
+            // get the resume file and keep in storage
             $fileName = $request->file('resume')->getClientOriginalName();
             $destinationPath = public_path('storage/files');
             $request->file('resume')->move($destinationPath, $fileName);
-            $validatedData['resume'] = '/storage/files/' . $fileName;
+            $validatedData['resume'] = '/storage/files/'.$fileName;
 
-            // since the user is authenticated, we need to save the application in the database 
+            // since the user is authenticated, we need to save the application in the database
             // for them to access later and see the progress of the application
 
             $new_application = Application::create([
                 'cv_link' => $validatedData['resume'],
                 'bio' => $validatedData['bio'],
                 'opp_id' => $opp_id,
-                'user_id' => Auth::user()->id,
+                'user_id' => auth()->user()->id,
                 'application_date' => now(),
             ]);
 
             // send email to the user
-            $seeker = Auth::user();
+            $seeker = auth()->user();
             $company = User::find($opp->user_id);
             $mailData = [
                 'company' => $company,
@@ -67,7 +74,8 @@ class ApplicationController extends Controller
             ];
 
             Mail::to($company->email)->queue(new ApplicationMail($mailData));
-            return redirect('/')->with('success', 'Your application has been sent successfully via gmail to ' . $company->name);
+
+            return redirect('/')->with('success', 'Your application has been sent successfully via gmail to '.$company->name);
 
         } else {
 
@@ -77,19 +85,19 @@ class ApplicationController extends Controller
             $fileName = $request->file('resume')->getClientOriginalName();
             $destinationPath = public_path('storage/files');
             $request->file('resume')->move($destinationPath, $fileName);
-            $validatedData['resume'] = '/storage/files/' . $fileName;
+            $validatedData['resume'] = '/storage/files/'.$fileName;
 
             $company = User::find($opp->user_id);
             $mailData = [
                 'company' => $company,
                 'opp' => $opp,
-                'guest' => $validatedData 
+                'guest' => $validatedData,
             ];
 
             Mail::to($company->email)->queue(new ApplicationMail($mailData));
 
             return redirect('/register')->with('success', 'Your application has been sent! Register Now to get notifications on opportunity posts.');
-            
+
         }
     }
 }

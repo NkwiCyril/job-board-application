@@ -1,22 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Opportunity;
-use App\Http\Controllers\Controller;
 
+use App\Models\Opportunity;
+use Illuminate\Contracts\View\View;
 
 class HomeController extends Controller
 {
-    public function index () {
-        return view('pages.welcome');
-    }
 
-    public function home () {
-        $opportunities = Opportunity::all()->where('published_at', !null);
+    public function index (): View
+    {
+        $opportunities = Opportunity::all()->where('published_at', ! null);
 
-        $published_opportunities = Opportunity::all()->where('published_at', !null);
+        $published_opportunities = Opportunity::all()->where('published_at', ! null);
         $unpublished_opportunities = Opportunity::all()->where('published_at', null);
-
 
         return view('pages.home', [
             'opportunities' => $opportunities,

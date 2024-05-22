@@ -3,7 +3,7 @@
 @section('title', 'Seeka | Apply for Opportunity')
 
 @section('content')
-@if(Auth::check())
+@if(auth()->check())
 
 <x-seeker_header></x-seeker_header>
 
@@ -17,9 +17,9 @@
   <!-- Card -->
   <div class="bg-white rounded-xl shadow p-4 sm:p-7">
 
-    @if (Auth::check())
+    @if (auth()->check())
     
-    <form action="{{route('pages.submit_application', $opportunity->id)}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('applications.store', $opportunity->id)}}" method="POST" enctype="multipart/form-data">
       @csrf
       <div class="sm:col-span-12">
         <h2 class="text-2xl font-semibold text-gray-800 text-center py-3">
@@ -41,7 +41,7 @@
 
         <div class="sm:col-span-9">
           <div class="sm:flex">
-            <input required id="name" name="name"  value="{{Auth::user()->name}}" type="text" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm -mt-px -ms-px rounded-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-customColor focus:ring-customColor disabled:opacity-50 disabled:pointer-events-none">
+            <input required id="name" name="name"  value="{{auth()->user()->name}}" type="text" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm -mt-px -ms-px rounded-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-customColor focus:ring-customColor disabled:opacity-50 disabled:pointer-events-none">
           </div>
         </div>
         <!-- End Col -->
@@ -54,7 +54,7 @@
         <!-- End Col -->
 
         <div class="sm:col-span-9">
-          <input required id="email" name="email" value="{{Auth::user()->email}}" type="email" autocomplete="email" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-customColor focus:ring-customColor disabled:opacity-50 disabled:pointer-events-none">
+          <input required id="email" name="email" value="{{auth()->user()->email}}" type="email" autocomplete="email" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-customColor focus:ring-customColor disabled:opacity-50 disabled:pointer-events-none">
         </div>
         <!-- End Col -->
 
@@ -68,7 +68,7 @@
         <!-- End Col -->
 
         <div class="sm:col-span-9">
-          <input required id="phone" name="phone_number" value="{{Auth::user()->phone_number}}" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-customColor focus:ring-customColor disabled:opacity-50 disabled:pointer-events-none">
+          <input required id="phone" name="phone_number" value="{{auth()->user()->phone_number}}" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-customColor focus:ring-customColor disabled:opacity-50 disabled:pointer-events-none">
         </div>
 
       </div>
@@ -120,7 +120,7 @@
     @else
 
 
-    <form action="{{route('pages.submit_application', $opportunity->id)}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('applications.store', $opportunity->id)}}" method="POST" enctype="multipart/form-data">
       @csrf
 
       <div class="sm:col-span-12">

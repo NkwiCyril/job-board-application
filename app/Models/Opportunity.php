@@ -10,6 +10,7 @@ class Opportunity extends Model
     use HasFactory;
 
     protected $table = 'opportunity';
+
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -17,19 +18,23 @@ class Opportunity extends Model
         'description',
         'image_url',
         'category_id',
-        'user_id'
+        'user_id',
     ];
 
-    public function category() {
+    protected $published_at;
+
+    public function category()
+    {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function application () {
+    public function application()
+    {
         return $this->hasMany(Application::class, 'opp_id');
     }
 
-    public function user () {
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
-
 }

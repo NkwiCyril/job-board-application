@@ -20,7 +20,7 @@
   <div class="flex min-h-full flex-col justify-center px-6 py-3 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-lg">
 
-      <a href="{{route('pages.home')}}">
+      <a href="{{route('home.index')}}">
         <img class="mx-auto h-12 w-auto" src="/seeka_logo.png" alt="seeka">
       </a>
 
@@ -133,7 +133,7 @@
 
       <p class="mt-5 text-center text-sm text-gray-500">
         Already have an account?
-        <a href="{{route('auth.login')}}" class="font-semibold leading-6 text-customColorDark hover:text-customColor">Sign In</a>
+        <a href="{{route('auth.index')}}" class="font-semibold leading-6 text-customColorDark hover:text-customColor">Sign In</a>
       </p>
 
     </div>

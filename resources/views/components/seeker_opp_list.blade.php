@@ -23,7 +23,7 @@
           <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 mt-2  py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Volunteer</span>
           @endif
         </div>
-        <a href="{{route('pages.opportunity', $oop['id'])}}" class="block mt-1 text-lg leading-tight font-medium text-black hover:no-underline hover:text-customColor">{{$oop->title}}</a>
+        <a href="{{route('opportunities.show', $oop['id'])}}" class="block mt-1 text-lg leading-tight font-medium text-black hover:no-underline hover:text-customColor">{{$oop->title}}</a>
         <p class="mt-2 text-slate-500">
 
           <!-- php script to trim the description if very long to conserve space -->
@@ -34,13 +34,14 @@
           $desc = substr($desc, 0, 100). '...';
           }
           @endphp
+          
           {{$desc}}
 
         </p>
 
         <!-- buttons displayed in seeker view only -->
         <button class="my-2">
-          <a href="{{route('pages.application', $oop['id'])}}" target="_blank" class="flex gap-1 items-center justify-center px-2 py-1 text-xs font-semibold  text-white bg-customColor ring-1 ring-inset ring-customColor hover:no-underline hover:bg-customColorDark">
+          <a href="{{route('applications.create', $oop['id'])}}" target="_blank" class="flex gap-1 items-center justify-center px-2 py-1 text-xs font-semibold  text-white bg-customColor ring-1 ring-inset ring-customColor hover:no-underline hover:bg-customColorDark">
             Apply
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
@@ -49,7 +50,7 @@
           </a>
         </button>
         <button class="my-2">
-          <a href="{{route('pages.opportunity', $oop['id'])}}" class="flex gap-1 items-center justify-center px-2 py-1 text-xs font-semibold  text-white bg-customColor ring-1 ring-inset ring-customColor hover:no-underline hover:bg-customColorDark">
+          <a href="{{route('opportunities.show', $oop['id'])}}" class="flex gap-1 items-center justify-center px-2 py-1 text-xs font-semibold  text-white bg-customColor ring-1 ring-inset ring-customColor hover:no-underline hover:bg-customColorDark">
             View
           </a>
         </button>

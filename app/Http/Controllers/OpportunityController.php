@@ -1,123 +1,166 @@
 <?php
 
 namespace App\Http\Controllers;
-use Carbon\Carbon;
 
-
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\Opportunity;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Http\Request;
 use App\Mail\NewOpportunityMail;
- 
+use App\Models\Opportunity;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Mail;
 
 class OpportunityController extends Controller
 {
-    public function view ($id) {
+    /**
+     * Display all published opportunities
+     */
+    public function index (): View
+    {
+        $published_opportunities = Opportunity::all()->where('published_at', ! null);
+
+        return view('opportunities.publish', [
+            'published_opportunities' => $published_opportunities,
+        ]);
+    }
+
+
+    /**
+     * Show a specific opportunity
+     * 
+     * @param int $id
+     */
+    public function show(int $id): View
+    {
         $opportunity = Opportunity::find($id);
         $published_at = Carbon::parse($opportunity->published_at)->diffForHumans();
-        return view('pages.view_opportunity',[
+
+        return view('opportunities.show', [
             'opportunity' => $opportunity,
             'published_at' => $published_at,
         ]);
     }
 
-    public function edit ($id) {
-        $opportunity = Opportunity::find($id);
-        return view('pages.edit_opportunity', [
-            'opportunity' => $opportunity,
-        ]);
+
+    /**
+     * Show the form for creating a new opportunity
+     */
+    public function create(): View
+    {
+        return view('opportunities.create');
     }
 
-    public function update (Request $request, $id) {
-        // get the image url
-        $validatedData = $request->validate([
-            'title' =>'required',
-            'image_url' =>'required|image',
-            'description' =>'required',
-            'category_id' =>['required' => 'max:1'],
-        ]);
-        $opportunity = Opportunity::find($id);
 
-        $opportunity->update($validatedData);
-
-        return redirect('/')->with('success', 'Opportunity has been updated successfully!');
-    }
-
-    public function create () {
-        return view('pages.create_opportunity');
-    }
-
-    public function store (Request $request) {
-
+    /**
+     * Store the newly created opportunity in the database
+     * 
+     * @param object $request 
+     */
+    public function store(Request $request): Redirector|RedirectResponse
+    {
         // validate
         $opportunity = $request->validate([
-            'title' =>'required|string',
-            'image_url' =>'required|image',
-            'description' =>'required|string',
-            'category' =>'required|integer',
+            'title' => 'required|string',
+            'image_url' => 'required|image',
+            'description' => 'required|string',
+            'category' => 'required|integer',
         ]);
 
         $fileName = $request->file('image_url')->getClientOriginalName();
         $destinationPath = public_path('storage/images');
         $request->file('image_url')->move($destinationPath, $fileName);
-        $opportunity['image_url'] = '/storage/images/' . $fileName;
-        
+        $opportunity['image_url'] = '/storage/images/'.$fileName;
 
-        try { 
+        try {
             $new = Opportunity::create([
                 'title' => $opportunity['title'],
                 'description' => $opportunity['description'],
                 'image_url' => $opportunity['image_url'],
-                'user_id' => Auth::user()->id,
+                'user_id' => auth()->user()->id,
                 'category_id' => $opportunity['category'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
         } catch (\Exception $e) {
-            Log::error('Error encountered in creating opportunity: ' . $e->getMessage());
+            logger()->error('Error encountered in creating opportunity: '.$e->getMessage());
         }
-        
 
-        return redirect('/')
-               ->with('success', 'Opportunity has been created successfully!');
+        return redirect()->route('home.index')->with('success', 'Opportunity has been created successfully!');
     }
 
 
-    // delete an opportunity from the database
-    public function delete ($id) {
-        Opportunity::where('id', $id)->delete(); 
-        return redirect('/')->with('success', 'Opportunity deleted successfully!');
-    }
+    /**
+     * Show the form to edit a created opportunity
+     * 
+     * @param int $id
+     */
+    public function edit(int $id): View
+    {
+        $opportunity = Opportunity::find($id);
 
-        // method to get all published opportunities
-    public function publish_all () {
-        $published_opportunities = Opportunity::all()->where('published_at', !null);
-            
-        return view('pages.publish_opportunity', [
-            'published_opportunities' => $published_opportunities,
+        return view('opportunities.edit', [
+            'opportunity' => $opportunity,
         ]);
     }
-    
-        // method to publish an opportunity
-    public function publish ($id) {
+
+
+    /**
+     * Update a created opportunity in the database
+     * 
+     * @param int $id
+     * @param object $request
+     */
+    public function update(Request $request, int $id): Redirector|RedirectResponse
+    {
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'image_url' => 'required|image',
+            'description' => 'required',
+            'category_id' => ['required' => 'max:1'],
+        ]);
+        $opportunity = Opportunity::find($id);
+
+        $opportunity->update($validatedData);
+
+        return redirect()->route('home.index')->with('success', 'Opportunity has been updated successfully!');
+    }
+
+
+    /**
+     * Remove an existing opportunity from the database
+     * 
+     * @param int $id
+     */
+    public function destroy(int $id): Redirector|RedirectResponse
+    {
+        Opportunity::where('id', $id)->delete();
+
+        return redirect()->route('home.index')->with('success', 'Opportunity deleted successfully!');
+    }
+
+
+    /**
+     * Publish an opportunity
+     * 
+     * @param int $id
+     */
+    public function publish(int $id): Redirector|RedirectResponse
+    {
         $opportunity = Opportunity::find($id);
         $opportunity->published_at = now();
         $opportunity->save();
-    
+
         $seekers = User::all();
-    
+
         // call the created Artisan command to delete the opportunity after specified time
-    
+
         Artisan::call('app:delete-old-opportunities');
-    
-    
-            // notify all users of that category via email notification
+
+        // notify all users of that category via email notification
         foreach ($seekers as $seeker) {
             if ($seeker->category === $opportunity->category->category_name) {
 
@@ -125,31 +168,34 @@ class OpportunityController extends Controller
                     'opportunity' => $opportunity,
                     'seeker' => $seeker,
                 ];
-    
-                // sending email error handling 
+
+                // sending email error handling
                 try {
                     Mail::to($seeker->email)->queue(new NewOpportunityMail($mailData));
                 } catch (\Exception $e) {
                     // Log the error message
-                    Log::error('Error sending email to ' . $seeker->email . ': ' . $e->getMessage());
-            
-                    // Optionally, you can handle the error further, like notifying an admin or retrying
+                    logger()->error('Error sending email to '.$seeker->email.': '.$e->getMessage());
                 }
-                    
+
             }
         }
-        
-        return redirect('/')->with('success', 'Opportunity published successfully! All published opportunities will be deleted after 30 days');
-    
+
+        return redirect()->route('opportunities.index')->with('success', 'Opportunity published successfully! All published opportunities will be deleted after 30 days');
+
     }
-    
-    // unpublish an opportunity 
-    public function unpublish ($id) {
+
+
+    /**
+     * Unpublish an opportunity
+     * 
+     * @param int $id
+     */
+    public function unpublish(int $id): Redirector|RedirectResponse
+    {
         $opportunity = Opportunity::find($id);
         $opportunity->published_at = null;
         $opportunity->save();
-    
-        return redirect('/')->with('success', 'Opportunity unpublished successfully!');
-    }
 
+        return redirect()->route('opportunities.index')->with('success', 'Opportunity unpublished successfully!');
+    }
 }

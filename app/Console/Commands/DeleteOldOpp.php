@@ -2,9 +2,7 @@
 
 namespace App\Console\Commands;
 
-use Carbon\Carbon;
 use Illuminate\Console\Command;
-use App\Models\Opportunity;
 
 class DeleteOldOpp extends Command
 {
@@ -25,15 +23,14 @@ class DeleteOldOpp extends Command
     /**
      * Execute the console command.
      */
-
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
     public function handle()
     {
         // 1 minute from the present time
-        
 
     }
 }

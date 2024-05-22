@@ -2,36 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 
 class LoginController extends Controller
 {
-    public function login () {
-        return view('auth.login');
+    /**
+     * Get the login page for existing users to sign in.
+     */
+    public function index (): View
+    {
+        return view('auth.index');
     }
 
-    public function logout (Request $request) {
+
+    /**
+     * Logout the current user and return to the homepage.
+     * @param object $request
+     */
+    public function logout(Request $request): RedirectResponse
+    {
 
         // change logged_in status to false in the database
         $user = User::where('id', $request->user_id)->first();
         $user->logged_in = false;
         $user->save();
 
-        Auth::logout();
+        auth()->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        
-        return redirect('/')->with('success', 'You have logged out successfully!');
+        return redirect()->route('home.index')->with('success', 'You have logged out successfully!');
 
     }
 
-    // authenticate users
-    public function authenticate (Request $request) {     
+    /**
+     * Authenticate users
+     * @param object $request
+     */
+    public function login (Request $request): RedirectResponse
+    {
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required|string',
@@ -40,15 +54,15 @@ class LoginController extends Controller
 
         $remember = $request['remember_me'] === 'on' ? true : false;
 
-        if (Auth::attempt($credentials, $remember)) {
+        if (auth()->attempt($credentials, $remember)) {
             $user = User::where('email', $credentials['email'])->first();
             $user->logged_in = true;
             $user->save();
-            
+
             $request->session()->regenerate();
             $new = session()->get('user');
-    
-            return redirect()->intended('/')->with([
+
+            return redirect()->route('home.index')->with([
                 'user' => $new,
                 'success' => 'Welcome! You have successfully logged in.',
             ]);

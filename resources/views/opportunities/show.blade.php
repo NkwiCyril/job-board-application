@@ -2,7 +2,7 @@
 
 @section('content')
 
-@if(Auth::check())
+@if(auth()->check())
 
 <x-seeker_header></x-seeker_header>
 
@@ -70,7 +70,7 @@
 
             <!-- Button Group -->
             <div>
-              <a href="{{route('pages.application', $opportunity->id)}}">
+              <a href="{{route('applications.create', $opportunity->id)}}">
                 <button type="button" class="py-1.5 px-2.5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-customColor bg-customColor text-gray-100 shadow-sm hover:bg-customColor disabled:opacity-50 disabled:pointer-events-none ">
                   Apply
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">

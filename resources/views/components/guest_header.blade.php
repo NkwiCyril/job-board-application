@@ -1,7 +1,7 @@
 <header class="fixed inset-x-0 top-0 z-50 border-bottom bg-slate-50 border-customColorDark">
     <nav class="flex items-center justify-between px-6 py-3 lg:px-8" aria-label="Global">
       <div class="flex lg:flex-1">
-        <a href="{{route('pages.home')}}" class="-m-1.5 p-1.5 flex items-center gap-2 hover:text-decoration-none hover:no-underline text-customColor">
+        <a href="{{route('home.index')}}" class="-m-1.5 p-1.5 flex items-center gap-2 hover:text-decoration-none hover:no-underline text-customColor">
           <img class="h-12 w-auto" src="/seeka_logo.png" alt="seeka logo">
           <span class="font-bold text-4xl">Seeka</span>
         </a>
@@ -15,7 +15,7 @@
         </button>
       </div>
       <div class="hidden gap-5 lg:flex lg:flex-1 lg:justify-end items-center">
-        <a href="{{route('auth.login')}}" class=" text-xl font-semibold leading-6 text-gray-900 transition ease-in-out hover:text-customColor hover:no-underline">Login</a>
+        <a href="{{route('auth.index')}}" class=" text-xl font-semibold leading-6 text-gray-900 transition ease-in-out hover:text-customColor hover:no-underline">Login</a>
         <a href="{{route('auth.register')}}" class=" border border-black rounded-md p-1 text-xl font-semibold leading-6 text-gray-900 transition ease-in-out hover:bg-customColor hover:text-white hover:no-underline">Sign Up</a>
       </div>
     </nav>
