@@ -29,7 +29,7 @@ class NewOpportunityMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Opportunity Alert!',
+            subject: 'New Opportunity!',
         );
     }
 
@@ -39,7 +39,7 @@ class NewOpportunityMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'mail.new_opportunity_email',
+            view: 'mail.opportunity',
         );
     }
 

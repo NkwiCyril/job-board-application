@@ -32,7 +32,7 @@
       </div>
       @endif
 
-      <form class="space-y-3" action="{{route('auth.login')}}" method="POST">
+      <form class="space-y-3" action="{{route('login.auth')}}" method="POST">
         @csrf
 
         <div>
@@ -84,7 +84,7 @@
 
       <p class="mt-10 text-center text-sm text-gray-500">
         Don't have an account?
-        <a href="{{route('auth.register')}}" class="font-semibold leading-6 text-customColor hover:text-customColorDark">Sign Up</a>
+        <a href="{{route('register.index')}}" class="font-semibold leading-6 text-customColor hover:text-customColorDark">Sign Up</a>
       </p>
     </div>
   </div>

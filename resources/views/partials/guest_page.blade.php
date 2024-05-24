@@ -26,7 +26,7 @@
           exploring internship opportunities, or voluneerism, Seeka has everything you need to succeed.
         </p>
         <div class="mt-10 flex items-center justify-center gap-x-6">
-          <a href="{{route('auth.register')}}" class="rounded-md bg-customColor px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-customColorDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 hover:no-underline focus-visible:outline-customColor">Get started</a>
+          <a href="{{route('register.index')}}" class="rounded-md bg-customColor px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-customColorDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 hover:no-underline focus-visible:outline-customColor">Get started</a>
         </div>
       </div>
     </div>

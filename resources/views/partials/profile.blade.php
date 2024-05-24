@@ -21,7 +21,7 @@
         </svg>
         Your Profile
       </a> --}}
-      <form method="POST" action="{{route('auth.logout')}}" role="none">
+      <form method="POST" action="{{route('login.logout')}}" role="none">
         @csrf
 
         <button type="submit" name="user_id" value="{{auth()->user()->id}}" class="flex gap-2 items-center text-gray-800 hover:text-customColor hover:no-underline w-full px-4 py-2 text-left text-lg" role="menuitem" tabindex="-1" id="menu-item-3">

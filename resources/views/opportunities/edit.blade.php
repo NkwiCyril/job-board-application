@@ -11,7 +11,8 @@
 
     <form action="{{route('opportunities.update', $opportunity->id)}}" method="post" enctype="multipart/form-data">
       @csrf
-
+      @method('UPDATE')
+      
       <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
         <div class="sm:col-span-2">
           <input value="{{$opportunity->title}}" type="text" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customColor focus:border-customColor block w-full p-2.5dark:placeholder-gray-400 dark: dark:focus:border-primary-500" placeholder="Opportunity Title" required>

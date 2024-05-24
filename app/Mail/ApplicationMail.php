@@ -29,7 +29,7 @@ class ApplicationMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Application Mail',
+            subject: 'New Application!',
         );
     }
 
@@ -39,7 +39,7 @@ class ApplicationMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'mail.application_email',
+            view: 'mail.application',
         );
     }
 

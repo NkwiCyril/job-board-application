@@ -4,9 +4,9 @@
 
 @if (session('success'))
 {{-- Alert Banner --}}
-<div id="success-alert" class=" alert alert-success hs-removing:-translate-y-full bg-customColor" data-auto-dismiss="2000">
+<div id="success-alert" class="alert alert-success hs-removing:-translate-y-full bg-customColor" data-auto-dismiss="2000">
   <div class="max-w-[85rem] p-2 sm:px-6 lg:px-8 mx-auto">
-    <div class="flex">
+    <div class="flex items-center justify-center">
       <p class="text-white">
         {{ session('success') }}
       </p>
@@ -42,7 +42,7 @@
         } else {
             formFilled = false;
             alert('Please fill all required fields');
-        }" action="{{ route('auth.register') }}" method="POST">
+        }" action="{{ route('register.store') }}" method="POST">
 
         @csrf
 
@@ -133,7 +133,7 @@
 
       <p class="mt-5 text-center text-sm text-gray-500">
         Already have an account?
-        <a href="{{route('auth.index')}}" class="font-semibold leading-6 text-customColorDark hover:text-customColor">Sign In</a>
+        <a href="{{route('login.index')}}" class="font-semibold leading-6 text-customColorDark hover:text-customColor">Sign In</a>
       </p>
 
     </div>
