@@ -8,17 +8,21 @@ use Illuminate\Contracts\View\View;
 class HomeController extends Controller
 {
 
+    /**
+     * Renders the homepage of each user in the application.
+     */
     public function index (): View
     {
-        $opportunities = Opportunity::all()->where('published_at', ! null);
+        $opportunities = Opportunity::all();
 
-        $published_opportunities = Opportunity::all()->where('published_at', ! null);
-        $unpublished_opportunities = Opportunity::all()->where('published_at', null);
+        $opps = $opportunities->where('published_at', ! null);
+        $published_opps = $opportunities->where('published_at', ! null);
+        $unpublished_opps = $opportunities->where('published_at', null);
 
         return view('pages.home', [
-            'opportunities' => $opportunities,
-            'published_opportunities' => $published_opportunities,
-            'unpublished_opportunities' => $unpublished_opportunities,
+            'opportunities' => $opps,
+            'published_opportunities' => $published_opps,
+            'unpublished_opportunities' => $unpublished_opps,
         ]);
     }
 }

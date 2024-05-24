@@ -19,7 +19,7 @@ class RegisterController extends Controller
         $valid_request = $request->validate([
             'usertype' => 'required|string', // Validate usertype as required and a string
             'name' => 'required|string|max:50', // Validate name as required and a string with max length 50
-            'email' => 'required|email|max:255', // Validate email as required, valid email format, and max length 255
+            'email' => 'required|email|unique:user|max:255', // Validate email as required, valid email format, and max length 255
             'password' => 'required|string|min:8|confirmed', // Validate password as required, string, min length 8, and should match confirm_password
             'phone_number' => 'required|string|min:9|max:20', // Validate phone number as required, string, min length 9, and max length 20
             'category' => 'nullable|string', // Validate category as an optional string with max length 255
@@ -38,7 +38,7 @@ class RegisterController extends Controller
         ]);
 
         if ($user) {
-            return redirect()->route('auth.index')->with('success', 'Registration Successfully. Now Login!');
+            return redirect()->route('login.index')->with('success', 'Registration Successfully. Now Login!');
         }
     }
 }

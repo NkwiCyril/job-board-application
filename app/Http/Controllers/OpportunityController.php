@@ -169,11 +169,9 @@ class OpportunityController extends Controller
                     'seeker' => $seeker,
                 ];
 
-                // sending email error handling
                 try {
                     Mail::to($seeker->email)->queue(new NewOpportunityMail($mailData));
                 } catch (\Exception $e) {
-                    // Log the error message
                     logger()->error('Error sending email to '.$seeker->email.': '.$e->getMessage());
                 }
 

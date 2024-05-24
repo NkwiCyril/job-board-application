@@ -17,7 +17,7 @@ class ApplicationController extends Controller
      * Show the application form for creating an application
      * @param int $id
      */
-    public function create($id): View
+    public function create(int $id): View
     {
         $opportunity = Opportunity::find($id);
 
@@ -32,7 +32,7 @@ class ApplicationController extends Controller
      * @param int $id
      * @param object $request
      */
-    public function store(Request $request, $opp_id): RedirectResponse
+    public function store(Request $request, int $opp_id): RedirectResponse
     {
         // validate incoming input
         $validatedData = $request->validate([
