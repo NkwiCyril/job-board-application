@@ -8,32 +8,32 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 
-// routes concerned with home page (guest, seeker and company)
-Route::get('home', [HomeController::class, 'index'])->name('home.index');
+// Route concerned with the home (all users)
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 
-// login routes
+// Routes concerned with logging in
 Route::controller(LoginController::class)
-    ->prefix('auth')
-    ->name('auth.')
+    ->prefix('login')
+    ->name('login.')
     ->group(function () {
         Route::get('/', 'index')->name('index');
-        Route::post('login', 'login')->name('login');
+        Route::post('login', 'login')->name('auth');
         Route::post('logout', 'logout')->name('logout');
     });
 
 
-// register routes
+// Routes concerned with registration
 Route::controller(RegisterController::class)
-    ->prefix('auth')
-    ->name('auth.')
+    ->prefix('register')
+    ->name('register.')
     ->group(function () {
         Route::get('/', 'index')->name('index');
-        Route::post('register', 'register')->name('register');
+        Route::post('register', 'register')->name('store');
     });
 
 
-// routes concerned with opportunities
+// Routes concerned with opportunities
 Route::controller(OpportunityController::class)
     ->prefix('opportunities')
     ->name('opportunities.')
@@ -49,18 +49,18 @@ Route::controller(OpportunityController::class)
         Route::delete('{id}', 'destroy')->name('destroy');
     });
 
-// routes concerned with applications
 
+// Routes concerned with applications
 Route::controller(ApplicationController::class)
     ->prefix('applications')
     ->name('applications.')
     ->group(function () {
         Route::get('{id}', 'create')->name('create');
-        Route::post('store', 'store')->name('store');
+        Route::post('store/{id}', 'store')->name('store');
     });
 
 
-// fallback 404 view in case of invalid route parameters
+// Fallback 404 view in case of invalid route parameters
 Route::fallback(function () {
     return view('error.error_page');
 });
