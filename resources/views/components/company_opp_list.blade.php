@@ -81,7 +81,7 @@
             </span>
           </button>
 
-          {{-- <div x-show="showConfirm" class="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-50">
+          <div x-show="showConfirm" class="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-50">
             <div class="bg-white p-6 rounded shadow-lg">
               <h2 class="text-lg font-semibold mb-4">Are you sure you want to delete this oppportunity?</h2>
               <div class="flex justify-end">
@@ -92,7 +92,7 @@
                 </form>
               </div>
             </div>
-          </div> --}}
+          </div>
         </div>
 
 
