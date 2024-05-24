@@ -36,11 +36,11 @@ class ApplicationController extends Controller
     {
         // validate incoming input
         $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone_number' => 'required',
-            'resume' => 'required',
-            'bio' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|string',
+            'phone_number' => 'required|string|min:9|max:20',
+            'resume' => 'required|file|size:2048',
+            'bio' => 'required|string',
         ]);
 
         $opp = Opportunity::find($opp_id);
@@ -73,7 +73,14 @@ class ApplicationController extends Controller
                 'opp' => $opp,
             ];
 
-            Mail::to($company->email)->queue(new ApplicationMail($mailData));
+            try {
+                Mail::to($company->email)->queue(new ApplicationMail($mailData));
+            } catch (\Exception $e) {
+                logger()->error('Error encountered while applying for opportunity: '.$e->getMessage());
+
+                return redirect('/')->with('success', 'Error encountered while sending application! Please try again');
+                
+            }
 
             return redirect('/')->with('success', 'Your application has been sent successfully via gmail to '.$company->name);
 
@@ -94,9 +101,17 @@ class ApplicationController extends Controller
                 'guest' => $validatedData,
             ];
 
-            Mail::to($company->email)->queue(new ApplicationMail($mailData));
+            try {
+                Mail::to($company->email)->queue(new ApplicationMail($mailData));
+                
+                return redirect('/register')->with('success', 'Your application has been sent! Register Now to get notifications on opportunity posts.');
 
-            return redirect('/register')->with('success', 'Your application has been sent! Register Now to get notifications on opportunity posts.');
+            } catch (\Exception $e) {
+                logger()->error('Error encountered while applying for opportunity: '.$e->getMessage());
+
+                return redirect('/')->with('success', 'Error encountered while sending application! Please try again');
+                
+            }
 
         }
     }
