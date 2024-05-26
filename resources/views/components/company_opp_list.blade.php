@@ -44,7 +44,7 @@
           @php
           $desc = $oop['description'];
           if (($desc) > 100) {
-          $desc = substr($desc, 0, 100). '...';
+          $desc = substr($desc, 0, 150). '...';
           }
           @endphp
           {{$desc}}

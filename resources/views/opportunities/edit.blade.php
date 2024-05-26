@@ -11,7 +11,7 @@
 
     <form action="{{route('opportunities.update', $opportunity->id)}}" method="post" enctype="multipart/form-data">
       @csrf
-      @method('UPDATE')
+      @method('PUT')
       
       <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
         <div class="sm:col-span-2">
@@ -30,7 +30,7 @@
                 <span class="btn btn-outline-secondary btn-file hover:bg-customColor">
                   <span class="fileinput-new">Select Image</span>
                   <span class="fileinput-exists">Change</span>
-                  <input type="file" name="image_url" accept="image/*" value="{{$opportunity->image_url}}" >
+                  <input type="file" name="image_url" accept="image/*" value="{{url($opportunity->image_url)}}" >
                 </span>
               </div>
             </div>

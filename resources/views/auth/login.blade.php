@@ -6,7 +6,7 @@
 <!-- Alert Banner -->
 <div id="success-alert" class=" alert alert-success hs-removing:-translate-y-full bg-customColor" data-auto-dismiss="2000">
   <div class="max-w-[85rem] p-2 sm:px-6 lg:px-8 mx-auto">
-    <div class="flex">
+    <div class="flex items-center justify-center">
       <p class="text-white">
         {{ session('success') }}
       </p>

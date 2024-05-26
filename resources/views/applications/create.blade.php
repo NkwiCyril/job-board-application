@@ -12,7 +12,9 @@
 <x-guest_header></x-guest_header>
 
 @endif
-<!-- Card Section -->
+
+
+<!-- Application Section -->
 <div class="max-w-4xl px-4 py-10 mt-20 sm:px-6 lg:px-8 lg:py-14 mx-auto">
   <!-- Card -->
   <div class="bg-white rounded-xl shadow p-4 sm:p-7">
@@ -45,6 +47,9 @@
           </div>
         </div>
         <!-- End Col -->
+        @error('name')
+          <em class=" text-sm text-danger">{{$message}}</em>
+        @enderror
 
         <div class="sm:col-span-3">
           <label for="email" class="inline-block text-sm font-medium text-gray-500 mt-2.5">
@@ -57,6 +62,9 @@
           <input required id="email" name="email" value="{{auth()->user()->email}}" type="email" autocomplete="email" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-customColor focus:ring-customColor disabled:opacity-50 disabled:pointer-events-none">
         </div>
         <!-- End Col -->
+        @error('email')
+          <em class=" text-sm text-danger">{{$message}}</em>
+        @enderror
 
         <div class="sm:col-span-3">
           <div class="inline-block">
@@ -73,6 +81,9 @@
 
       </div>
       <!-- End Section -->
+      @error('phone_number')
+          <em class=" text-sm text-danger">{{$message}}</em>
+        @enderror
 
       <!-- Section -->
       <div class="grid sm:grid-cols-12 gap-2 sm:gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200">
@@ -95,6 +106,9 @@
           <input required type="file" name="resume" id="resume" accept=".doc, .docx, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, .pdf" class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-customColor focus:ring-customColor disabled:opacity-50 disabled:pointer-events-none file:border-0 file:me-4 file:py-2 file:px-4">
         </div>
         <!-- End Col -->
+        @error('resume')
+          <em class=" text-sm text-danger">{{$message}}</em>
+        @enderror
 
         <div class="sm:col-span-3">
           <div class="inline-block">
@@ -108,6 +122,9 @@
         <div class="sm:col-span-9">
           <textarea required id="bio" name="bio" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-customColor focus:ring-customColor disabled:opacity-50 disabled:pointer-events-none" rows="6" placeholder="Add a cover letter or anything else you want to share.">{{old('bio')}}</textarea>
         </div>
+        @error('bio')
+          <em class=" text-sm text-danger">{{$message}}</em>
+        @enderror
         <!-- End Col -->
       </div>
       <!-- End Section -->
@@ -146,6 +163,9 @@
           </div>
         </div>
         <!-- End Col -->
+        @error('name')
+          <em class=" text-sm text-danger">{{$message}}</em>
+        @enderror
 
         <div class="sm:col-span-3">
           <label for="email" class="inline-block text-sm font-medium text-gray-500 mt-2.5">
@@ -158,6 +178,9 @@
           <input required id="email" name="email" value="{{old('email')}}" type="email" autocomplete="email" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-customColor focus:ring-customColor disabled:opacity-50 disabled:pointer-events-none">
         </div>
         <!-- End Col -->
+        @error('email')
+          <em class=" text-sm text-danger">{{$message}}</em>
+        @enderror
 
         <div class="sm:col-span-3">
           <div class="inline-block">
@@ -173,6 +196,9 @@
         </div>
         <!-- End Col -->
       </div>
+      @error('phone_number')
+          <em class=" text-sm text-danger">{{$message}}</em>
+        @enderror
       <!-- End Section -->
 
       <!-- Section -->
@@ -193,8 +219,12 @@
 
         <div class="sm:col-span-9">
           <label for="resume" class="sr-only">Choose file</label>
-          <input required type="file" value="{{old('resume')}}" name="resume" accept=".doc, .docx, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, .pdf" id="resume" class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-customColor focus:ring-customColor disabled:opacity-50 disabled:pointer-events-none file:border-0 file:me-4 file:py-2 file:px-4">
+          <input required type="file" maxlength="11000000" value="{{old('resume')}}" name="resume" accept=".doc, .docx, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, .pdf" id="resume" class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-customColor focus:ring-customColor disabled:opacity-50 disabled:pointer-events-none file:border-0 file:me-4 file:py-2 file:px-4">
         </div>
+
+        @error('resume')
+          <em class=" text-sm text-danger">{{$message}}</em>
+        @enderror
         <!-- End Col -->
 
         <div class="sm:col-span-3">
@@ -209,6 +239,9 @@
         <div class="sm:col-span-9">
           <textarea required id="bio" name="bio" class="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-customColor focus:ring-customColor disabled:opacity-50 disabled:pointer-events-none" rows="6" placeholder="Add a cover letter or anything else you want to share.">{{old('bio')}}</textarea>
         </div>
+        @error('bio')
+          <em class=" text-sm text-danger">{{$message}}</em>
+        @enderror
         <!-- End Col -->
       </div>
       <!-- End Section -->
@@ -224,3 +257,22 @@
 </div>
 <!-- End Card Section -->
 @endsection
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  const uploadField = document.getElementById("resume");
+
+  uploadField.onchange = function() {
+    if(this.files[0].size > 2097152) {
+       alert("File should be less than 11mb in size!");
+       this.value = "";
+    }
+};
+
+})
+
+
+</script>

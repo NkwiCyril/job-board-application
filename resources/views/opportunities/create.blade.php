@@ -28,7 +28,7 @@
               <div class="fileinput-new img-thumbnail" style="width: 150px; height: 150px;">
                 <img src="https://via.placeholder.com/150x150" alt="opportunity choosen image">
               </div>
-              <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 150px; max-height: 150px;"></div>
+              <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: fit-content; max-height: fit-content;"></div>
               <div class="mt-2">
                 <span class="btn btn-outline-secondary btn-file hover:bg-customColor">
                   <span class="fileinput-new">Select Image</span>
