@@ -19,7 +19,7 @@ class ApplicationController extends Controller
      */
     public function create(int $id): View
     {
-        $opportunity = Opportunity::find($id);
+        $opportunity = Opportunity::findOrFail($id);
 
         return view('applications.create', [
             'opportunity' => $opportunity,
@@ -43,7 +43,7 @@ class ApplicationController extends Controller
             'bio' => 'required|string',
         ]);
 
-        $opp = Opportunity::find($opp_id);
+        $opp = Opportunity::findOrFail($opp_id);
 
         if (auth()->check()) {
 

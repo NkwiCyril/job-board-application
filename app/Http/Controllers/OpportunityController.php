@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Mail\NewOpportunityMail;
 use App\Models\Opportunity;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -36,7 +35,7 @@ class OpportunityController extends Controller
      */
     public function show(int $id): View
     {
-        $opportunity = Opportunity::find($id);
+        $opportunity = Opportunity::findOrFail($id);
         $published_at = $opportunity->published_at_diff;
 
         return view('opportunities.show', [
@@ -103,7 +102,7 @@ class OpportunityController extends Controller
      */
     public function edit(int $id): View
     {
-        $opportunity = Opportunity::find($id);
+        $opportunity = Opportunity::findOrFail($id);
 
         return view('opportunities.edit', [
             'opportunity' => $opportunity,
@@ -159,7 +158,7 @@ class OpportunityController extends Controller
      */
     public function publish(int $id): Redirector|RedirectResponse
     {
-        $opportunity = Opportunity::find($id);
+        $opportunity = Opportunity::findOrFail($id);
         $opportunity->published_at = now();
         $opportunity->save();
 
@@ -201,7 +200,7 @@ class OpportunityController extends Controller
      */
     public function unpublish(int $id): Redirector|RedirectResponse
     {
-        $opportunity = Opportunity::find($id);
+        $opportunity = Opportunity::findOrFail($id);
         $opportunity->published_at = null;
         $opportunity->save();
 
