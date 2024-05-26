@@ -20,7 +20,8 @@ class OpportunityController extends Controller
      */
     public function index (): View
     {
-        $published_opportunities = Opportunity::all()->where('published_at', ! null);
+        $opportunities = Opportunity::all();
+        $published_opportunities = $opportunities->where('published_at', !null);
 
         return view('opportunities.publish', [
             'published_opportunities' => $published_opportunities,
@@ -36,7 +37,7 @@ class OpportunityController extends Controller
     public function show(int $id): View
     {
         $opportunity = Opportunity::find($id);
-        $published_at = Carbon::parse($opportunity->published_at)->diffForHumans();
+        $published_at = $opportunity->published_at_diff;
 
         return view('opportunities.show', [
             'opportunity' => $opportunity,
@@ -87,6 +88,8 @@ class OpportunityController extends Controller
 
         } catch (\Exception $e) {
             logger()->error('Error encountered in creating opportunity: '.$e->getMessage());
+            return redirect()->route('home.index')->with('success', 'Problem encountered! Try creating again.');
+
         }
 
         return redirect()->route('home.index')->with('success', 'Opportunity has been created successfully!');
@@ -118,10 +121,16 @@ class OpportunityController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required',
-            'image_url' => 'required|image',
+            'image_url' => 'required',
             'description' => 'required',
             'category_id' => ['required' => 'max:1'],
         ]);
+
+        $fileName = $request->file('image_url')->getClientOriginalName();
+        $destinationPath = public_path('storage/images');
+        $request->file('image_url')->move($destinationPath, $fileName);
+        $validatedData['image_url'] = '/storage/images/'.$fileName;
+
         $opportunity = Opportunity::find($id);
 
         $opportunity->update($validatedData);
@@ -173,12 +182,14 @@ class OpportunityController extends Controller
                     Mail::to($seeker->email)->queue(new NewOpportunityMail($mailData));
                 } catch (\Exception $e) {
                     logger()->error('Error sending email to '.$seeker->email.': '.$e->getMessage());
+                    return redirect()->route('opportunities.index')->with('success', 'Error encountered while sending email! Please try again');
                 }
 
             }
         }
 
-        return redirect()->route('opportunities.index')->with('success', 'Opportunity published successfully! All published opportunities will be deleted after 30 days');
+        // change message
+        return redirect()->route('opportunities.index')->with('success', 'Opportunity published successfully!');
 
     }
 

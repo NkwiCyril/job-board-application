@@ -39,7 +39,7 @@ class ApplicationController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|string',
             'phone_number' => 'required|string|min:9|max:20',
-            'resume' => 'required|file|size:2048',
+            'resume' => 'required|file|max:11000',
             'bio' => 'required|string',
         ]);
 
