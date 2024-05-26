@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as AuthenticatableUser;
 
 class User extends AuthenticatableUser
@@ -26,12 +27,12 @@ class User extends AuthenticatableUser
         'password',
     ];
 
-    public function application()
+    public function application(): HasMany
     {
         return $this->hasMany(Application::class, 'id');
     }
 
-    public function opportunity()
+    public function opportunity(): HasMany
     {
         return $this->hasMany(Opportunity::class, 'id');
     }
