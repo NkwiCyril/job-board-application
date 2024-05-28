@@ -17,21 +17,18 @@ class OpportunityController extends Controller
     /**
      * Display all published opportunities
      */
-    public function index (): View
+    public function index(): View
     {
         $opportunities = Opportunity::all();
-        $published_opportunities = $opportunities->where('published_at', !null);
+        $published_opportunities = $opportunities->where('published_at', ! null);
 
         return view('opportunities.publish', [
             'published_opportunities' => $published_opportunities,
         ]);
     }
 
-
     /**
      * Show a specific opportunity
-     * 
-     * @param int $id
      */
     public function show(int $id): View
     {
@@ -44,7 +41,6 @@ class OpportunityController extends Controller
         ]);
     }
 
-
     /**
      * Show the form for creating a new opportunity
      */
@@ -53,11 +49,10 @@ class OpportunityController extends Controller
         return view('opportunities.create');
     }
 
-
     /**
      * Store the newly created opportunity in the database
-     * 
-     * @param object $request 
+     *
+     * @param  object  $request
      */
     public function store(Request $request): Redirector|RedirectResponse
     {
@@ -87,6 +82,7 @@ class OpportunityController extends Controller
 
         } catch (\Exception $e) {
             logger()->error('Error encountered in creating opportunity: '.$e->getMessage());
+
             return redirect()->route('home.index')->with('success', 'Problem encountered! Try creating again.');
 
         }
@@ -94,11 +90,8 @@ class OpportunityController extends Controller
         return redirect()->route('home.index')->with('success', 'Opportunity has been created successfully!');
     }
 
-
     /**
      * Show the form to edit a created opportunity
-     * 
-     * @param int $id
      */
     public function edit(int $id): View
     {
@@ -109,12 +102,10 @@ class OpportunityController extends Controller
         ]);
     }
 
-
     /**
      * Update a created opportunity in the database
-     * 
-     * @param int $id
-     * @param object $request
+     *
+     * @param  object  $request
      */
     public function update(Request $request, int $id): Redirector|RedirectResponse
     {
@@ -137,11 +128,8 @@ class OpportunityController extends Controller
         return redirect()->route('home.index')->with('success', 'Opportunity has been updated successfully!');
     }
 
-
     /**
      * Remove an existing opportunity from the database
-     * 
-     * @param int $id
      */
     public function destroy(int $id): Redirector|RedirectResponse
     {
@@ -150,11 +138,8 @@ class OpportunityController extends Controller
         return redirect()->route('home.index')->with('success', 'Opportunity deleted successfully!');
     }
 
-
     /**
      * Publish an opportunity
-     * 
-     * @param int $id
      */
     public function publish(int $id): Redirector|RedirectResponse
     {
@@ -181,6 +166,7 @@ class OpportunityController extends Controller
                     Mail::to($seeker->email)->queue(new NewOpportunityMail($mailData));
                 } catch (\Exception $e) {
                     logger()->error('Error sending email to '.$seeker->email.': '.$e->getMessage());
+
                     return redirect()->route('opportunities.index')->with('success', 'Error encountered while sending email! Please try again');
                 }
 
@@ -192,11 +178,8 @@ class OpportunityController extends Controller
 
     }
 
-
     /**
      * Unpublish an opportunity
-     * 
-     * @param int $id
      */
     public function unpublish(int $id): Redirector|RedirectResponse
     {

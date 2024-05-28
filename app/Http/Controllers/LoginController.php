@@ -6,22 +6,21 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
     /**
      * Get the login page for existing users to sign in.
      */
-    public function index (): View
+    public function index(): View
     {
         return view('auth.login');
     }
 
-
     /**
      * Logout the current user and return to the homepage.
-     * @param object $request
+     *
+     * @param  object  $request
      */
     public function logout(Request $request): RedirectResponse
     {
@@ -42,9 +41,10 @@ class LoginController extends Controller
 
     /**
      * Authenticate users
-     * @param object $request
+     *
+     * @param  object  $request
      */
-    public function login (Request $request): RedirectResponse
+    public function login(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
             'email' => 'required|email',

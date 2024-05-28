@@ -7,10 +7,8 @@ use App\Http\Controllers\OpportunityController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
-
 // Route concerned with the home (all users)
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
-
 
 // Routes concerned with logging in
 Route::controller(LoginController::class)
@@ -22,7 +20,6 @@ Route::controller(LoginController::class)
         Route::post('logout', 'logout')->name('logout');
     });
 
-
 // Routes concerned with registration
 Route::controller(RegisterController::class)
     ->prefix('register')
@@ -31,7 +28,6 @@ Route::controller(RegisterController::class)
         Route::get('/', 'index')->name('index');
         Route::post('register', 'register')->name('store');
     });
-
 
 // Routes concerned with opportunities
 Route::controller(OpportunityController::class)
@@ -49,7 +45,6 @@ Route::controller(OpportunityController::class)
         Route::delete('{id}', 'destroy')->name('destroy');
     });
 
-
 // Routes concerned with applications
 Route::controller(ApplicationController::class)
     ->prefix('applications')
@@ -58,7 +53,6 @@ Route::controller(ApplicationController::class)
         Route::get('{id}', 'create')->name('create');
         Route::post('store/{id}', 'store')->name('store');
     });
-
 
 // Fallback 404 view in case of invalid route parameters
 Route::fallback(function () {

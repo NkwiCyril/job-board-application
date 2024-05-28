@@ -7,11 +7,10 @@ use Illuminate\Contracts\View\View;
 
 class HomeController extends Controller
 {
-
     /**
      * Renders the homepage of each user in the application.
      */
-    public function index (): View
+    public function index(): View
     {
         $opportunities = Opportunity::all();
 

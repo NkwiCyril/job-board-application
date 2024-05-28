@@ -15,7 +15,6 @@ class ApplicationController extends Controller
 {
     /**
      * Show the application form for creating an application
-     * @param int $id
      */
     public function create(int $id): View
     {
@@ -26,11 +25,11 @@ class ApplicationController extends Controller
         ]);
     }
 
-
     /**
-     * Store new application in the database and send notification 
-     * @param int $id
-     * @param object $request
+     * Store new application in the database and send notification
+     *
+     * @param  int  $id
+     * @param  object  $request
      */
     public function store(Request $request, int $opp_id): RedirectResponse
     {
@@ -79,7 +78,7 @@ class ApplicationController extends Controller
                 logger()->error('Error encountered while applying for opportunity: '.$e->getMessage());
 
                 return redirect('/')->with('success', 'Error encountered while sending application! Please try again');
-                
+
             }
 
             return redirect('/')->with('success', 'Your application has been sent successfully via gmail to '.$company->name);
@@ -103,14 +102,14 @@ class ApplicationController extends Controller
 
             try {
                 Mail::to($company->email)->queue(new ApplicationMail($mailData));
-                
+
                 return redirect('/register')->with('success', 'Your application has been sent! Register Now to get notifications on opportunity posts.');
 
             } catch (\Exception $e) {
                 logger()->error('Error encountered while applying for opportunity: '.$e->getMessage());
 
                 return redirect('/')->with('success', 'Error encountered while sending application! Please try again');
-                
+
             }
 
         }

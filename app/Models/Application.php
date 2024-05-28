@@ -24,12 +24,12 @@ class Application extends Model
         'application_date',
     ];
 
-    public function user():BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function opportunity():BelongsTo
+    public function opportunity(): BelongsTo
     {
         return $this->belongsTo(Opportunity::class, 'opp_id');
     }
