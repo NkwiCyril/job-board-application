@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as AuthenticatableUser;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends AuthenticatableUser
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory;
 
     protected $table = 'user';
 

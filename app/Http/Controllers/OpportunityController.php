@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class OpportunityController extends Controller
 {
@@ -20,7 +21,7 @@ class OpportunityController extends Controller
     public function index(): View
     {
         $opportunities = Opportunity::all();
-        $published_opportunities = $opportunities->where('published_at', ! null);
+        $published_opportunities = $opportunities->whereNotNull('published_at');
 
         return view('opportunities.publish', [
             'published_opportunities' => $published_opportunities,
@@ -57,19 +58,29 @@ class OpportunityController extends Controller
     public function store(Request $request): Redirector|RedirectResponse
     {
         // validate
-        $opportunity = $request->validate([
+        $validator = Validator::make($request->all(), [
             'title' => 'required|string',
             'image_url' => 'required|image',
             'description' => 'required|string',
             'category' => 'required|integer',
         ]);
 
-        $fileName = $request->file('image_url')->getClientOriginalName();
-        $destinationPath = public_path('storage/images');
-        $request->file('image_url')->move($destinationPath, $fileName);
-        $opportunity['image_url'] = '/storage/images/'.$fileName;
+        if ($validator->fails()) {
+            return redirect()->route('home.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $opportunity = $validator->validated();
 
         try {
+            $file = $request->file('image_url');
+
+            $fileName = $file->getClientOriginalName();
+            $destinationPath = public_path('storage/images');
+            $file->move($destinationPath, $fileName);
+            $opportunity['image_url'] = '/storage/images/'.$fileName;
+
             $new = Opportunity::create([
                 'title' => $opportunity['title'],
                 'description' => $opportunity['description'],
@@ -80,14 +91,13 @@ class OpportunityController extends Controller
                 'updated_at' => now(),
             ]);
 
+            return redirect()->route('home.index')->with('success', 'Opportunity has been created successfully!');
+
         } catch (\Exception $e) {
             logger()->error('Error encountered in creating opportunity: '.$e->getMessage());
 
-            return redirect()->route('home.index')->with('success', 'Problem encountered! Try creating again.');
-
+            return redirect()->route('home.index')->with('error', 'Problem encountered! Try creating again.');
         }
-
-        return redirect()->route('home.index')->with('success', 'Opportunity has been created successfully!');
     }
 
     /**
