@@ -61,7 +61,7 @@ class AuthController extends Controller
                 'usertype' => $validatedCredentials['usertype'],
                 'name' => $validatedCredentials['name'],
                 'email' => $validatedCredentials['email'],
-                'password' =>  bcrypt($validatedCredentials['password']),
+                'password' => bcrypt($validatedCredentials['password']),
                 'phone_number' => $validatedCredentials['phone_number'],
                 'category' => $validatedCredentials['category'],
                 'logged_in' => false,
@@ -81,6 +81,26 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 0,
                 'error' => 'Error encountered: '.$e->getMessage(),
+            ], 500);
+        }
+
+    }
+
+    public function logout(): JsonResponse
+    {
+
+        try {
+            //
+            auth()->user()->tokens()->delete();
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'User logged out successful!',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 0,
+                'message' => 'Error encountered: '.$e->getMessage(),
             ], 500);
         }
 

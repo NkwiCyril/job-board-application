@@ -10,7 +10,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 /**
- * Routes for user login and registration
+ * Endpoints for user login and registration
  * Do not require API authentication
  */
 Route::controller(AuthController::class)
@@ -19,9 +19,8 @@ Route::controller(AuthController::class)
         Route::post('login', [AuthController::class, 'login']);
     });
 
-    
 /**
- * Routes for opportunities
+ * Endpoints for opportunities
  * Require API authentication
  */
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -30,6 +29,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::controller(AuthController::class)
         ->group(function () {
-            Route::get('logout', [AuthController::class, 'register']);
+            Route::get('logout', [AuthController::class, 'logout']);
         });
 });

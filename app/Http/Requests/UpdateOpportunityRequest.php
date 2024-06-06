@@ -22,7 +22,10 @@ class UpdateOpportunityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'sometimes|string',
+            'image_url' => 'sometimes|image',
+            'description' => 'sometimes|string',
+            'category' => 'sometimes|integer',
         ];
     }
 }

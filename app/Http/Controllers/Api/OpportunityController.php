@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOpportunityRequest;
+use App\Http\Requests\UpdateOpportunityRequest;
 use App\Models\Opportunity;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class OpportunityController extends Controller
 {
@@ -15,11 +15,10 @@ class OpportunityController extends Controller
      */
     public function index(): JsonResponse
     {
-        $opportunities = Opportunity::whereNotNull('published_at');
+        $opportunities = Opportunity::all();
 
         try {
-            if ($opportunities->exists()) {
-                $opportunities = $opportunities->get();
+            if (isset($opportunities)) {
 
                 return response()->json([
                     'status' => 1,
@@ -87,24 +86,124 @@ class OpportunityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
-        //
+        try {
+            $opportunity = Opportunity::where([
+                'id' => $id,
+            ]);
+
+            if ($opportunity->exists()) {
+
+                $opportunity = $opportunity->first();
+
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Opportunity retrieved successfully',
+                    'data' => $opportunity,
+                ]);
+            } else {
+                return response()->json([
+                    'error' => 'Opportunity not found',
+                    'status' => 0,
+                ]);
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error encountered: '.$e->getMessage(),
+                'status' => 0,
+            ]);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateOpportunityRequest $request, string $id): JsonResponse
     {
-        //
+
+        try {
+
+            $opportunity = Opportunity::where('id', $id);
+
+            if ($opportunity->exists()) {
+
+                $validatedData = $request->validated();
+
+                $opportunity = $opportunity->first();
+
+                // check if file exists
+                if (isset($validatedData['image_url'])) {
+
+                    $file = $validatedData->file('image_url');
+
+                    $fileName = $file->getClientOriginalName();
+                    $destinationPath = public_path('storage/images');
+                    $file->move($destinationPath, $fileName);
+                    $opportunity->image_url = '/storage/images/'.$fileName;
+                }
+
+                $opportunity->title = $validatedData['title'] ?? $opportunity->title;
+                $opportunity->description = $validatedData['description'] ?? $opportunity->description;
+                $opportunity->category_id = $validatedData['category'] ?? $opportunity->category_id;
+
+                $opportunity->save();
+
+                return response()->json([
+                    'message' => 'Opportunity updated successfully!',
+                    'status' => 1,
+                    'data' => $opportunity,
+                ], 200);
+
+            } else {
+                return response()->json([
+                    'message' => 'Opportunity not found. Try again!',
+                    'status' => 0,
+                ], 404);
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Unable to update opportunity. Try again!',
+                'error' => 'Error encountered: '.$e->getMessage(),
+                'status' => 0,
+            ], 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
-        //
+        $opportunity = Opportunity::where([
+            'id' => $id,
+        ]);
+
+        try {
+
+            if ($opportunity->exists()) {
+                $opportunity = $opportunity->first();
+
+                $opportunity->delete();
+
+                return response()->json([
+                    'message' => 'Opportunity deleted successfully',
+                    'status' => 1,
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'Opportunity not found',
+                    'status' => 0,
+                ]);
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 0,
+                'error' => 'Internal server error: '.$e->getMessage(),
+            ]);
+        }
     }
 }

@@ -51,7 +51,7 @@ class LoginController extends Controller
             'password' => 'required|string',
             'rememder_me' => 'string',
         ]);
-        $rem = $request['remember_me'];
+
         $remember = $request['remember_me'] === 'on' ? true : false;
 
         if (auth()->attempt($credentials, $remember)) {
@@ -61,11 +61,11 @@ class LoginController extends Controller
 
             $request->session()->regenerate();
             $new = session()->get('user');
-            dd($rem);
-            // return redirect()->route('home.index')->with([
-            //     'user' => $new,
-            //     'success' => 'Welcome! You have successfully logged in.',
-            // ]);
+
+            return redirect()->route('home.index')->with([
+                'user' => $new,
+                'success' => 'Welcome! You have successfully logged in.',
+            ]);
         } else {
             return back()->withErrors([
                 'error' => 'The provided email/password do not match our records!',
