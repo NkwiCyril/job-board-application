@@ -19,6 +19,7 @@ Route::controller(AuthController::class)
         Route::post('login', [AuthController::class, 'login']);
     });
 
+    
 /**
  * Routes for opportunities
  * Require API authentication

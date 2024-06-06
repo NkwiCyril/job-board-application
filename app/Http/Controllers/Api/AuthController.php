@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
@@ -27,7 +28,7 @@ class AuthController extends Controller
 
                 return response()->json([
                     'status' => 1,
-                    'message' => 'You have logged in successfully!',
+                    'message' => 'Login successful!',
                     'user' => $user,
                     'token' => $token,
                 ], 200);
@@ -47,5 +48,41 @@ class AuthController extends Controller
                 'error' => 'Error encountered: '.$e->getMessage(),
             ]);
         }
+    }
+
+    public function register(RegisterUserRequest $request): JsonResponse
+    {
+
+        $validatedCredentials = $request->validated();
+
+        try {
+
+            $user = User::create([
+                'usertype' => $validatedCredentials['usertype'],
+                'name' => $validatedCredentials['name'],
+                'email' => $validatedCredentials['email'],
+                'password' =>  bcrypt($validatedCredentials['password']),
+                'phone_number' => $validatedCredentials['phone_number'],
+                'category' => $validatedCredentials['category'],
+                'logged_in' => false,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Registration successful!',
+                'user' => $user,
+            ], 200);
+
+        } catch (\Exception $e) {
+            logger()->error('Error encountered while registering: '.$e->getMessage());
+
+            return response()->json([
+                'status' => 0,
+                'error' => 'Error encountered: '.$e->getMessage(),
+            ], 500);
+        }
+
     }
 }

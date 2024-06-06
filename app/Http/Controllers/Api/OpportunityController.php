@@ -43,7 +43,7 @@ class OpportunityController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreOpportunityRequest $request)
+    public function store(StoreOpportunityRequest $request): JsonResponse
     {
         $validatedRequest = $request->validated();
 
@@ -55,6 +55,7 @@ class OpportunityController extends Controller
             $destinationPath = public_path('storage/images');
             $file->move($destinationPath, $fileName);
             $validatedRequest['image_url'] = '/storage/images/'.$fileName;
+
             $opp = new Opportunity();
 
             $opp->title = $validatedRequest['title'];
