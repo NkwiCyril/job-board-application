@@ -15,20 +15,21 @@ Route::get('/user', function (Request $request) {
  */
 Route::controller(AuthController::class)
     ->group(function () {
-        Route::post('register', [AuthController::class, 'register']);
-        Route::post('login', [AuthController::class, 'login']);
+        Route::post('register', 'register');
+        Route::post('login', 'login');
+        Route::get('logout', 'logout')->middleware('auth:sanctum');
     });
 
 /**
  * Endpoints for opportunities
  * Require API authentication
  */
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::controller(OpportunityController::class)
+    ->prefix('opps')
+    ->group(function () {
+        Route::get('publish/{id}', 'publish');
+        Route::get('unpublish/{id}', 'unpublish');
+        Route::get('filter', 'filter');
+    });
 
-    Route::apiResource('opps', OpportunityController::class);
-
-    Route::controller(AuthController::class)
-        ->group(function () {
-            Route::get('logout', [AuthController::class, 'logout']);
-        });
-});
+Route::apiResource('opps', OpportunityController::class);

@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class AuthController extends Controller
 {
-    public function login(LoginUserRequest $request): JsonResponse
+    public function login(LoginUserRequest $request): JsonResource
     {
         $validatedCredentials = $request->validated();
 
@@ -26,12 +28,7 @@ class AuthController extends Controller
                 $user->logged_in = true;
                 $user->save();
 
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Login successful!',
-                    'user' => $user,
-                    'token' => $token,
-                ], 200);
+                return new UserResource($user);
 
             } else {
                 return response()->json([
