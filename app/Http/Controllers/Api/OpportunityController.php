@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterOpportunitiesRequest;
 use App\Http\Requests\StoreOpportunityRequest;
 use App\Http\Requests\UpdateOpportunityRequest;
+use App\Http\Resources\ErrorResource;
+use App\Http\Resources\OpportunityResource;
 use App\Models\Opportunity;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class OpportunityController extends Controller
 {
@@ -19,18 +21,14 @@ class OpportunityController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(): JsonResource
     {
         $opportunities = Opportunity::all();
 
         try {
             if (isset($opportunities)) {
 
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Retrieved published opportunities successfully!.',
-                    'data' => $opportunities,
-                ], 200);
+                return new OpportunityResource($opportunities);
             } else {
                 return response()->json([
                     'status' => 0,
@@ -38,10 +36,7 @@ class OpportunityController extends Controller
                 ], 404);
             }
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => 0,
-                'message' => 'An error has been encountered: '.$e->getMessage(),
-            ], 500);
+            return new ErrorResource('An error has been encountered: '.$e->getMessage());
         }
     }
 
@@ -50,7 +45,7 @@ class OpportunityController extends Controller
      *
      * @param  object  $request
      */
-    public function store(StoreOpportunityRequest $request): JsonResponse
+    public function store(StoreOpportunityRequest $request): JsonResource
     {
         $validatedRequest = $request->validated();
 
@@ -73,20 +68,14 @@ class OpportunityController extends Controller
 
             $opp->save();
 
-            return response()->json([
-                'status' => 1,
-                'message' => 'Opportunity created successfully.',
-                'data' => $opp,
-            ], 201);
+            return new OpportunityResource($opp);
 
         } catch (\Exception $e) {
 
             logger()->error($e->getMessage());
 
-            return response()->json([
-                'status' => 0,
-                'message' => 'An error has been encountered: '.$e->getMessage(),
-            ], 500);
+            return new ErrorResource('An error has been encountered: '.$e->getMessage());
+
         }
 
     }
@@ -94,7 +83,7 @@ class OpportunityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): JsonResponse
+    public function show(string $id): JsonResource
     {
         try {
             $opportunity = Opportunity::where([
@@ -105,23 +94,13 @@ class OpportunityController extends Controller
 
                 $opportunity = $opportunity->first();
 
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Opportunity retrieved successfully',
-                    'data' => $opportunity,
-                ]);
+                return new OpportunityResource($opportunity);
             } else {
-                return response()->json([
-                    'error' => 'Opportunity not found',
-                    'status' => 0,
-                ]);
+                return new ErrorResource('Could not find opportunity');
             }
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Error encountered: '.$e->getMessage(),
-                'status' => 0,
-            ]);
+            return new ErrorResource('An error has been encountered: '.$e->getMessage());
         }
     }
 
@@ -130,7 +109,7 @@ class OpportunityController extends Controller
      *
      * @param  object  $request
      */
-    public function update(UpdateOpportunityRequest $request, string $id): JsonResponse
+    public function update(UpdateOpportunityRequest $request, string $id): JsonResource
     {
 
         try {
@@ -160,32 +139,21 @@ class OpportunityController extends Controller
 
                 $opportunity->save();
 
-                return response()->json([
-                    'message' => 'Opportunity updated successfully!',
-                    'status' => 1,
-                    'data' => $opportunity,
-                ], 200);
+                return new OpportunityResource($opportunity);
 
             } else {
-                return response()->json([
-                    'message' => 'Opportunity not found. Try again!',
-                    'status' => 0,
-                ], 404);
+                return new ErrorResource('Counld not find opportunity');
             }
 
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Unable to update opportunity. Try again!',
-                'error' => 'Error encountered: '.$e->getMessage(),
-                'status' => 0,
-            ], 500);
+            return new ErrorResource('An error has been encountered: '.$e->getMessage());
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): JsonResponse
+    public function destroy(string $id): JsonResource
     {
         $opportunity = Opportunity::where([
             'id' => $id,
@@ -198,29 +166,20 @@ class OpportunityController extends Controller
 
                 $opportunity->delete();
 
-                return response()->json([
-                    'message' => 'Opportunity deleted successfully',
-                    'status' => 1,
-                ]);
+                return new OpportunityResource('Opportunity deleted successfully');
             } else {
-                return response()->json([
-                    'message' => 'Opportunity not found',
-                    'status' => 0,
-                ]);
+                return new ErrorResource('Could not find opportunity');
             }
 
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => 0,
-                'error' => 'Internal server error: '.$e->getMessage(),
-            ]);
+            return new ErrorResource('An error has been encountered: '.$e->getMessage());
         }
     }
 
     /**
      * Publish an opportunity
      */
-    public function publish(string $id): JsonResponse
+    public function publish(string $id): JsonResource
     {
         $opportunity = Opportunity::where([
             'id' => $id,
@@ -236,36 +195,23 @@ class OpportunityController extends Controller
                     $opportunity->published_at = now();
                     $opportunity->save();
 
-                    return response()->json([
-                        'message' => 'Opportunity published successfully',
-                        'status' => 1,
-                        'data' => $opportunity,
-                    ], 200);
+                    return new OpportunityResource($opportunity);
                 } else {
-                    return response()->json([
-                        'message' => 'Opportunity already published',
-                        'status' => 0,
-                    ]);
+                    return new ErrorResource('Opportunity already published');
                 }
             } else {
-                return response()->json([
-                    'message' => 'Opportunity not found',
-                    'status' => 0,
-                ]);
+                return new ErrorResource('Could not find opportunity');
             }
 
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => 0,
-                'error' => 'Internal server error: '.$e->getMessage(),
-            ]);
+            return new ErrorResource('An error has been encountered: '.$e->getMessage());
         }
     }
 
     /**
      * Unpublish an opportunity
      */
-    public function unpublish(string $id): JsonResponse
+    public function unpublish(string $id): JsonResource
     {
         $opportunity = Opportunity::where([
             'id' => $id,
@@ -281,29 +227,16 @@ class OpportunityController extends Controller
                     $opportunity->published_at = null;
                     $opportunity->save();
 
-                    return response()->json([
-                        'message' => 'Opportunity unpublished successfully',
-                        'status' => 1,
-                        'data' => $opportunity,
-                    ], 200);
+                    return new OpportunityResource($opportunity);
                 } else {
-                    return response()->json([
-                        'message' => 'Opportunity is not published',
-                        'status' => 0,
-                    ]);
+                    return new ErrorResource('Opportunity is not published');
                 }
             } else {
-                return response()->json([
-                    'message' => 'Opportunity not found',
-                    'status' => 0,
-                ]);
+                return new ErrorResource('Could not find opportunity');
             }
 
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => 0,
-                'error' => 'Internal server error: '.$e->getMessage(),
-            ]);
+            return new ErrorResource('Internal server error: ' . $e->getMessage());
         }
     }
 
@@ -312,7 +245,7 @@ class OpportunityController extends Controller
      *
      * @param  object  $request
      */
-    public function filter(FilterOpportunitiesRequest $request): JsonResponse
+    public function filter(FilterOpportunitiesRequest $request): JsonResource
     {
         try {
             $validatedRequest = $request->validated();
@@ -337,15 +270,9 @@ class OpportunityController extends Controller
 
             $opportunities = $query->get();
 
-            return response()->json([
-                'status' => 1,
-                'data' => $opportunities,
-            ]);
+            return new OpportunityResource($opportunities);
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => 0,
-                'message' => 'Error encountered: '.$e->getMessage(),
-            ], 500);
+            return new ErrorResource('Internal Server Error: '. $e->getMessage());
         }
     }
 }
