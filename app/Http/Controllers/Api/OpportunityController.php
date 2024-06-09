@@ -48,7 +48,7 @@ class OpportunityController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param object $request
+     * @param  object  $request
      */
     public function store(StoreOpportunityRequest $request): JsonResponse
     {
@@ -310,7 +310,7 @@ class OpportunityController extends Controller
     /**
      * Filter opportunities by text (title, description) category and date published.
      *
-     * @param object $request
+     * @param  object  $request
      */
     public function filter(FilterOpportunitiesRequest $request): JsonResponse
     {
@@ -320,9 +320,6 @@ class OpportunityController extends Controller
             $title = $validatedRequest['title'] ?? null;
             $category = $validatedRequest['category_id'] ?? null;
             $published_at = $validatedRequest['published_at'] ?? null;
-
-
-            
 
             $query = Opportunity::query();
 

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
-use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Http\Resources\AuthResource;
+use App\Http\Resources\ErrorResource;
+
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,26 +31,20 @@ class AuthController extends Controller
                 $user->logged_in = true;
                 $user->save();
 
-                return new UserResource($user);
+                return new AuthResource($user);
 
             } else {
-                return response()->json([
-                    'status' => 0,
-                    'message' => 'The provided email/password do not match our records!',
-                ]);
+                return new ErrorResource('The provided email/password do not match our records!');
             }
         } catch (\Exception $e) {
 
             logger()->error('Error encountered while logging in: '.$e->getMessage());
 
-            return response()->json([
-                'status' => 0,
-                'error' => 'Error encountered: '.$e->getMessage(),
-            ]);
+            return new ErrorResource('Error encountered: '.$e->getMessage());
         }
     }
 
-    public function register(RegisterUserRequest $request): JsonResponse
+    public function register(RegisterUserRequest $request): JsonResource
     {
 
         $validatedCredentials = $request->validated();
@@ -66,11 +63,7 @@ class AuthController extends Controller
                 'updated_at' => now(),
             ]);
 
-            return response()->json([
-                'status' => 1,
-                'message' => 'Registration successful!',
-                'user' => $user,
-            ], 200);
+            return new AuthResource($user);
 
         } catch (\Exception $e) {
             logger()->error('Error encountered while registering: '.$e->getMessage());
@@ -83,22 +76,17 @@ class AuthController extends Controller
 
     }
 
-    public function logout(): JsonResponse
+    public function logout(): JsonResource
     {
 
         try {
-            //
+
             auth()->user()->tokens()->delete();
 
-            return response()->json([
-                'status' => 1,
-                'message' => 'User logged out successful!',
-            ], 200);
+            return new AuthResource('User logged out successful!');
+
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => 0,
-                'message' => 'Error encountered: '.$e->getMessage(),
-            ], 500);
+            return new ErrorResource('Error encountered: '.$e->getMessage());
         }
 
     }
