@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OpportunityResource extends JsonResource
+class ErrorResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,7 +15,7 @@ class OpportunityResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'status' => 1,
+            'status' => 0,
             'message' => $this->resource,
         ];
     }

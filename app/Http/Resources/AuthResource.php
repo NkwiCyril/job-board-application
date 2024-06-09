@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OpportunityResource extends JsonResource
+class AuthResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,7 @@ class OpportunityResource extends JsonResource
     {
         return [
             'status' => 1,
-            'message' => $this->resource,
+            'message' => array($this->resource),
         ];
     }
 }
