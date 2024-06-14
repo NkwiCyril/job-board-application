@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\OpportunityController;
 use Illuminate\Http\Request;
@@ -33,3 +34,14 @@ Route::controller(OpportunityController::class)
     });
 
 Route::apiResource('opps', OpportunityController::class);
+
+/**
+ * Endpoints for applications
+ * Do not require API authentication
+ */
+Route::apiResource('apps', ApplicationController::class)->except('store');
+Route::controller(ApplicationController::class)
+    ->prefix('apps')
+    ->group(function () {
+        Route::post('{id}', 'store');
+    });

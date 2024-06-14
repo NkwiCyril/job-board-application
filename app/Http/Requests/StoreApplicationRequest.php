@@ -22,7 +22,11 @@ class StoreApplicationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|string',
+            'phone_number' => 'required|string|min:9|max:20',
+            'resume' => 'required|file|max:11000',
+            'bio' => 'required|string',
         ];
     }
 }

@@ -16,7 +16,7 @@ class AuthResource extends JsonResource
     {
         return [
             'status' => 1,
-            'message' => array($this->resource),
+            'message' => [$this->resource],
         ];
     }
 }

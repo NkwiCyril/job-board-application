@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\User;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Resources\AuthResource;
 use App\Http\Resources\ErrorResource;
-
-use Illuminate\Http\JsonResponse;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AuthController extends Controller
@@ -31,7 +28,10 @@ class AuthController extends Controller
                 $user->logged_in = true;
                 $user->save();
 
-                return new AuthResource($user);
+                return new AuthResource([
+                    'user' => $user,
+                    'token' => $token,
+                ]);
 
             } else {
                 return new ErrorResource('The provided email/password do not match our records!');
@@ -78,7 +78,6 @@ class AuthController extends Controller
 
     public function logout(): JsonResource
     {
-
         try {
 
             auth()->user()->tokens()->delete();

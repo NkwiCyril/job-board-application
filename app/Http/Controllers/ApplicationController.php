@@ -55,7 +55,7 @@ class ApplicationController extends Controller
             // since the user is authenticated, we need to save the application in the database
             // for them to access later and see the progress of the application
 
-            $new_application = Application::create([
+            Application::create([
                 'cv_link' => $validatedData['resume'],
                 'bio' => $validatedData['bio'],
                 'opp_id' => $opp_id,
@@ -93,7 +93,16 @@ class ApplicationController extends Controller
             $request->file('resume')->move($destinationPath, $fileName);
             $validatedData['resume'] = '/storage/files/'.$fileName;
 
+            Application::create([
+                'cv_link' => $validatedData['resume'],
+                'bio' => $validatedData['bio'],
+                'opp_id' => $opp_id,
+                'user_id' => null,
+                'application_date' => now(),
+            ]);
+
             $company = User::find($opp->user_id);
+
             $mailData = [
                 'company' => $company,
                 'opp' => $opp,
