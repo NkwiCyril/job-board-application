@@ -8,6 +8,7 @@
         "php": "^8.2",
         "berkayk/onesignal-laravel": "^2.1",
         "itsgoingd/clockwork": "^5.2",
+        "laravel-notification-channels/onesignal": "*",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9"
